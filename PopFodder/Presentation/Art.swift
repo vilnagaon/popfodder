@@ -4,8 +4,9 @@ import UIKit
 enum Art {
     private static var cache: [String: SKTexture] = [:]
 
-    /// 32px top-down infantry. Helmet is the person (faction disc). Idle 8-dir (0=E).
-    /// `walk`: 0 idle, 1/2 stride. Dead is one pose. Do not rotate the sprite.
+    /// 32px 3/4 toy soldier (Cannon Fodder height, original pixels).
+    /// Pot helmet, torso, two legs, rifle. Idle 8-dir (0=E). `walk`: 0 idle, 1/2 stride.
+    /// Do not rotate the sprite.
     static func infantry(
         player: Bool,
         group: Int,
@@ -15,65 +16,31 @@ enum Art {
     ) -> SKTexture {
         let dir = dead ? 2 : dir8(facing)
         let step = dead ? 0 : max(0, min(2, walk))
-        return memo("inf32-\(player)-\(group)-\(dead)-\(dir)-\(step)") {
-            let body: RGB
+        return memo("inf32d-\(player)-\(group)-\(dead)-\(dir)-\(step)") {
+            let pot: RGB
             if dead {
-                body = (70, 70, 70)
+                pot = (70, 70, 70)
             } else if !player {
-                body = (220, 40, 36)
+                pot = (220, 40, 36)
             } else if group == 0 {
-                body = (56, 200, 82)
+                pot = (56, 200, 82)
             } else {
-                body = (38, 158, 184)
+                pot = (38, 158, 184)
             }
-            let outline: RGB = dead ? (40, 40, 40) : (16, 16, 14)
-            let visor: RGB = dead ? (48, 48, 48) : (28, 28, 26)
-            let shine = shade(body, 1.18)
-            let dark = shade(body, 0.62)
-            let pack: RGB? = (dead || !player) ? nil : (255, 214, 0)
-            let rifle: RGB = dead ? (58, 58, 56) : (210, 210, 198)
-            let boot: RGB = dead ? (48, 48, 48) : (22, 22, 20)
             return stamp(32) { set, _ in
-                if dead {
-                    disk(16, 18, 8, outline, set)
-                    disk(16, 18, 7, body, set)
-                    disk(16, 16, 3, visor, set)
-                    disk(11, 24, 2.2, boot, set)
-                    disk(21, 24, 2.2, boot, set)
-                    return
-                }
-                let ang = Double(dir) * .pi / 4
-                let fx = cos(ang)
-                let fy = -sin(ang)
-                var bob = 0.0
-                var lx = 12.0, ly = 26.5, rx = 20.0, ry = 26.5
-                if step == 1 {
-                    bob = -0.7
-                    lx = 11.2 + fx * 1.6; ly = 24.2 + fy * 1.4
-                    rx = 20.8 - fx * 1.6; ry = 27.8 - fy * 1.4
-                } else if step == 2 {
-                    bob = 0.5
-                    lx = 12.8 - fx * 1.6; ly = 27.8 - fy * 1.4
-                    rx = 19.2 + fx * 1.6; ry = 24.2 + fy * 1.4
-                }
-                let hy = 12 + bob
-                let by = 21 + bob * 0.6
-                disk(16, hy, 8, outline, set)
-                disk(16, hy, 7, body, set)
-                disk(16 - fx * 2.2, hy - fy * 2.2 - 0.8, 2.4, shine, set)
-                disk(16 + fx * 3.2, hy + fy * 3.2, 2.6, visor, set)
-                if let pack {
-                    disk(16 - fx * 5.5, hy - fy * 5.5, 2.2, pack, set)
-                }
-                disk(16, by, 5.2, outline, set)
-                disk(16, by - 0.5, 4.4, dark, set)
-                disk(16, by - 1.5, 3.6, body, set)
-                disk(lx, ly, 2.1, boot, set)
-                disk(rx, ry, 2.1, boot, set)
-                thickLine(
-                    16 + fx * 6.5, hy + fy * 6.5,
-                    16 + fx * 13.5, hy + fy * 13.5,
-                    rifle, set
+                paintMan(
+                    pot: pot,
+                    outline: dead ? (40, 40, 40) : (16, 16, 14),
+                    visor: dead ? (48, 48, 48) : (28, 28, 26),
+                    boot: dead ? (48, 48, 48) : (22, 22, 20),
+                    skin: dead ? (88, 88, 86) : (198, 152, 112),
+                    pack: (player && !dead) ? (255, 214, 0) : nil,
+                    collar: nil,
+                    rifle: !dead,
+                    dir: dir,
+                    step: step,
+                    dead: dead,
+                    set: set
                 )
             }
         }
@@ -87,29 +54,47 @@ enum Art {
     }
 
     private static func disk(_ cx: Double, _ cy: Double, _ r: Double, _ rgb: RGB, _ set: (Int, Int, RGB) -> Void) {
-        let r2 = r * r
-        let x0 = max(0, Int(floor(cx - r)))
-        let x1 = min(31, Int(ceil(cx + r)))
-        let y0 = max(0, Int(floor(cy - r)))
-        let y1 = min(31, Int(ceil(cy + r)))
+        oval(cx, cy, r, r, rgb, set)
+    }
+
+    private static func oval(_ cx: Double, _ cy: Double, _ rx: Double, _ ry: Double, _ rgb: RGB, _ set: (Int, Int, RGB) -> Void) {
+        guard rx > 0, ry > 0 else { return }
+        let x0 = max(0, Int(floor(cx - rx)))
+        let x1 = min(31, Int(ceil(cx + rx)))
+        let y0 = max(0, Int(floor(cy - ry)))
+        let y1 = min(31, Int(ceil(cy + ry)))
         guard x0 <= x1, y0 <= y1 else { return }
+        let rx2 = rx * rx
+        let ry2 = ry * ry
         for y in y0...y1 {
             for x in x0...x1 {
                 let dx = Double(x) + 0.5 - cx
                 let dy = Double(y) + 0.5 - cy
-                if dx * dx + dy * dy <= r2 { set(x, y, rgb) }
+                if (dx * dx) / rx2 + (dy * dy) / ry2 <= 1 { set(x, y, rgb) }
             }
         }
     }
 
-    private static func thickLine(_ x0: Double, _ y0: Double, _ x1: Double, _ y1: Double, _ rgb: RGB, _ set: (Int, Int, RGB) -> Void) {
-        let steps = max(1, Int(hypot(x1 - x0, y1 - y0) * 2))
+    private static func rect(_ x0: Int, _ y0: Int, _ x1: Int, _ y1: Int, _ rgb: RGB, _ set: (Int, Int, RGB) -> Void) {
+        let xa = max(0, min(x0, x1))
+        let xb = min(31, max(x0, x1))
+        let ya = max(0, min(y0, y1))
+        let yb = min(31, max(y0, y1))
+        for y in ya...yb {
+            for x in xa...xb { set(x, y, rgb) }
+        }
+    }
+
+    private static func stroke(_ x0: Double, _ y0: Double, _ x1: Double, _ y1: Double, _ r: Double, _ rgb: RGB, _ set: (Int, Int, RGB) -> Void) {
+        let steps = max(1, Int(hypot(x1 - x0, y1 - y0) * 2.2))
         for i in 0...steps {
             let t = Double(i) / Double(steps)
-            let cx = x0 + (x1 - x0) * t
-            let cy = y0 + (y1 - y0) * t
-            disk(cx, cy, 1.15, rgb, set)
+            oval(x0 + (x1 - x0) * t, y0 + (y1 - y0) * t, r, r, rgb, set)
         }
+    }
+
+    private static func thickLine(_ x0: Double, _ y0: Double, _ x1: Double, _ y1: Double, _ rgb: RGB, _ set: (Int, Int, RGB) -> Void) {
+        stroke(x0, y0, x1, y1, 1.15, rgb, set)
     }
 
     private typealias RGB = (Int, Int, Int)
@@ -122,52 +107,130 @@ enum Art {
         )
     }
 
-    /// 32px escort. Gold disc, no rifle, no pack. Wider helmet than infantry.
+    /// 32px escort. Same toy-soldier rig, gold, no rifle, no pack, ivory collar.
     static func vip(dead: Bool = false, facing: CGFloat = .pi / 2, walk: Int = 0) -> SKTexture {
         let dir = dead ? 2 : dir8(facing)
         let step = dead ? 0 : max(0, min(2, walk))
-        return memo("vip32b-\(dead)-\(dir)-\(step)") {
-            let body: RGB = dead ? (90, 82, 48) : (240, 210, 70)
-            let outline: RGB = dead ? (40, 38, 28) : (48, 36, 12)
-            let shine = shade(body, 1.15)
-            let dark = shade(body, 0.62)
-            let boot: RGB = dead ? (48, 48, 48) : (22, 22, 20)
-            let collar: RGB = dead ? (70, 70, 68) : (242, 240, 235)
+        return memo("vip32d-\(dead)-\(dir)-\(step)") {
+            let pot: RGB = dead ? (90, 82, 48) : (240, 210, 70)
             return stamp(32) { set, _ in
-                if dead {
-                    disk(16, 18, 9, outline, set)
-                    disk(16, 18, 8, body, set)
-                    disk(16, 16, 3, dark, set)
-                    disk(11, 24, 2.2, boot, set)
-                    disk(21, 24, 2.2, boot, set)
-                    return
-                }
-                let ang = Double(dir) * .pi / 4
-                let fx = cos(ang)
-                let fy = -sin(ang)
-                var bob = 0.0
-                var lx = 12.0, ly = 26.5, rx = 20.0, ry = 26.5
-                if step == 1 {
-                    bob = -0.7
-                    lx = 11.2 + fx * 1.6; ly = 24.2 + fy * 1.4
-                    rx = 20.8 - fx * 1.6; ry = 27.8 - fy * 1.4
-                } else if step == 2 {
-                    bob = 0.5
-                    lx = 12.8 - fx * 1.6; ly = 27.8 - fy * 1.4
-                    rx = 19.2 + fx * 1.6; ry = 24.2 + fy * 1.4
-                }
-                let hy = 12 + bob
-                let by = 21 + bob * 0.6
-                disk(16, hy, 9, outline, set)
-                disk(16, hy, 8, body, set)
-                disk(16 - fx * 2.0, hy - fy * 2.0 - 0.6, 2.6, shine, set)
-                disk(16 + fx * 2.4, hy + fy * 2.4, 2.0, collar, set)
-                disk(16, by, 5.6, outline, set)
-                disk(16, by - 0.5, 4.8, dark, set)
-                disk(16, by - 1.5, 4.0, body, set)
-                disk(lx, ly, 2.1, boot, set)
-                disk(rx, ry, 2.1, boot, set)
+                paintMan(
+                    pot: pot,
+                    outline: dead ? (40, 38, 28) : (48, 36, 12),
+                    visor: dead ? (60, 56, 40) : (48, 36, 12),
+                    boot: dead ? (48, 48, 48) : (22, 22, 20),
+                    skin: dead ? (88, 84, 70) : (198, 152, 112),
+                    pack: nil,
+                    collar: dead ? (70, 70, 68) : (242, 240, 235),
+                    rifle: false,
+                    dir: dir,
+                    step: step,
+                    dead: dead,
+                    set: set
+                )
             }
+        }
+    }
+
+    /// 3/4 man: pot helmet, torso, stride, optional rifle / Brass pack / collar.
+    private static func paintMan(
+        pot: RGB,
+        outline: RGB,
+        visor: RGB,
+        boot: RGB,
+        skin: RGB,
+        pack: RGB?,
+        collar: RGB?,
+        rifle: Bool,
+        dir: Int,
+        step: Int,
+        dead: Bool,
+        set: (Int, Int, RGB) -> Void
+    ) {
+        let dark = shade(pot, 0.62)
+        let lite = shade(pot, 1.16)
+        let stock: RGB = (92, 62, 34)
+        let barrel: RGB = (52, 52, 50)
+        if dead {
+            oval(16, 21, 11, 4.2, shade(outline, 0.8), set)
+            oval(10, 17, 6.2, 5.2, outline, set)
+            oval(10, 17, 5.1, 4.1, pot, set)
+            oval(12.2, 17.4, 2.2, 1.6, visor, set)
+            oval(19, 18, 6.5, 3.6, outline, set)
+            oval(19, 18, 5.4, 2.6, pot, set)
+            rect(24, 16, 30, 20, dark, set)
+            rect(28, 16, 31, 20, boot, set)
+            rect(16, 17, 18, 19, skin, set)
+            return
+        }
+        let ang = Double(dir) * .pi / 4
+        let fx = cos(ang)
+        let fy = -sin(ang)
+        let bob: Double = step == 1 ? -0.8 : (step == 2 ? 0.6 : 0)
+        let stride: Double = step == 1 ? 2.8 : (step == 2 ? -2.8 : 0)
+        let hx = 16.0
+        let hy = 8.4 + bob
+        let tx = 16.0 + fx * 0.8
+        let ty = 16.4 + bob * 0.4
+        let px = -fy
+        let py = fx
+        let front = fy > 0.28
+        let back = fy < -0.28
+
+        func leg(_ sx: Double, _ sy: Double) {
+            oval(sx, sy, 2.4, 2.6, outline, set)
+            oval(sx, sy, 1.6, 1.9, pot, set)
+            oval(sx, sy + 4.2, 2.2, 2.4, outline, set)
+            oval(sx, sy + 4.2, 1.5, 1.7, dark, set)
+            oval(sx + fx * 0.3, sy + 6.2, 2.2, 1.5, boot, set)
+        }
+        let l1x = tx - px * 3.6 - fx * stride * 0.35
+        let l1y = 22.6 + bob + fy * stride * 0.4
+        let l2x = tx + px * 3.6 + fx * stride * 0.35
+        let l2y = 22.6 + bob - fy * stride * 0.4
+        if l1y < l2y { leg(l1x, l1y); leg(l2x, l2y) } else { leg(l2x, l2y); leg(l1x, l1y) }
+
+        if back, let pack {
+            oval(tx - fx * 3.4, ty + 2.4, 3.0, 2.6, outline, set)
+            oval(tx - fx * 3.4, ty + 2.4, 2.3, 2.0, pack, set)
+        }
+
+        oval(tx, ty, 4.6, 5.4, outline, set)
+        oval(tx, ty, 3.6, 4.4, pot, set)
+        oval(tx - 1.1, ty - 1.2, 1.6, 1.3, lite, set)
+        if let collar {
+            oval(tx + fx * 2.0, ty + fy * 2.2, 2.2, 1.7, collar, set)
+        }
+        oval(tx + fx * 0.3, ty - 3.6, 1.6, 1.3, skin, set)
+
+        oval(hx, hy, 6.2, 5.4, outline, set)
+        oval(hx, hy, 5.2, 4.4, pot, set)
+        oval(hx - 1.6, hy - 1.4, 1.9, 1.5, lite, set)
+        if front {
+            oval(hx + fx * 1.2, hy + 2.4, 3.6, 1.7, visor, set)
+        } else if abs(fx) > 0.5 {
+            oval(hx + fx * 3.2, hy + 0.6, 1.8, 2.2, visor, set)
+        }
+
+        if !back, let pack {
+            oval(tx - fx * 3.2, ty + 2.2, 2.6, 2.2, outline, set)
+            oval(tx - fx * 3.2, ty + 2.2, 1.9, 1.6, pack, set)
+        }
+
+        if rifle {
+            let gx = tx + px * 5.0 + fx * 1.2
+            let gy = ty + py * 5.0 + fy * 0.8 + 1.4
+            let mx = gx + fx * 6.0
+            let my = gy + fy * 6.0
+            let bx = gx + fx * 12.2
+            let by = gy + fy * 12.2
+            let sx = gx - fx * 2.6
+            let sy = gy - fy * 2.6
+            stroke(sx, sy, gx, gy, 1.55, stock, set)
+            stroke(gx, gy, mx, my, 1.3, barrel, set)
+            stroke(mx, my, bx, by, 1.1, barrel, set)
+            oval(bx, by, 1.2, 1.2, (210, 210, 198), set)
+            oval(gx, gy, 1.6, 1.6, skin, set)
         }
     }
 

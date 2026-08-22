@@ -207,7 +207,7 @@ Engine already has stamps. Replace in this order so each drop changes play, not 
 | # | Asset | Why first | Owner |
 |---|--------|-----------|-------|
 | 1 | Infantry 16px: Ours / Split / Theirs / Dead, 1 dir | Economy is these four | **In `Art.infantry` 2026-08-21.** Same rig, Brass pack on player only. `GameScene` rotates facing − π/2 |
-| 2 | Same, **8 directions** (idle) | Facing = who dies | **32px idle 2026-08-21.** Helmet = faction disc. `zRotation` 0 |
+| 2 | Same, **8 directions** (idle) | Facing = who dies | **32px 3/4 toy soldier 2026-08-22.** Pot helmet + torso + legs + rifle. `zRotation` 0 |
 | 3 | Walk 2-frame on those 8 | Motion is the order feedback | **In `Art.infantry` 2026-08-21.** Stride while `path` is non-empty, 0.12s/frame |
 | 4 | Turret 20px | Makes grenades a decision | Pixel |
 | 5 | Barracks + black door / dead | Spawner is a mouth | **In `Art.barracks` 2026-08-21.** 40px planks; dead fills the mouth |

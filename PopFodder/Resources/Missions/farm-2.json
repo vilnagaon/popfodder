@@ -1,0 +1,98 @@
+{
+  "id": "farm-2",
+  "tileSize": 32,
+  "grenadeLoadout": 0,
+  "rocketLoadout": 0,
+  "squad": [
+    {
+      "x": -42,
+      "y": -200
+    },
+    {
+      "x": -14,
+      "y": -200
+    },
+    {
+      "x": 14,
+      "y": -200
+    },
+    {
+      "x": 42,
+      "y": -200
+    }
+  ],
+  "enemies": [
+    {
+      "x": -70,
+      "y": 30,
+      "patrol": [
+        {
+          "x": -70,
+          "y": 30
+        },
+        {
+          "x": 70,
+          "y": 30
+        }
+      ]
+    },
+    {
+      "x": 70,
+      "y": 120,
+      "patrol": [
+        {
+          "x": 70,
+          "y": 120
+        },
+        {
+          "x": -70,
+          "y": 120
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 80
+    }
+  ],
+  "name": "THE FARM",
+  "blurb": "NOW GET THE PACKAGE HOME.",
+  "objective": "extract_vip",
+  "biome": "grass",
+  "aggression": 6,
+  "tiles": [
+    "WWWWWWWWWWWWWWWWWWWWWWWW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WWWWWWWWWWGGGGWWWWWWWWWW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WWWWWWWWWWGGGGWWWWWWWWWW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WWWWWWWWWWWWWWWWWWWWWWWW"
+  ],
+  "vip": {
+    "x": 50,
+    "y": -170,
+    "name": "PACKAGE"
+  },
+  "extract": {
+    "x": 0,
+    "y": 200
+  },
+  "grenades": [
+    {
+      "x": -160,
+      "y": -40
+    }
+  ]
+}

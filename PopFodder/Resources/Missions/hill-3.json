@@ -1,0 +1,104 @@
+{
+  "id": "hill-3",
+  "tileSize": 32,
+  "grenadeLoadout": 1,
+  "rocketLoadout": 0,
+  "squad": [
+    {
+      "x": -42,
+      "y": -200
+    },
+    {
+      "x": -14,
+      "y": -200
+    },
+    {
+      "x": 14,
+      "y": -200
+    },
+    {
+      "x": 42,
+      "y": -200
+    }
+  ],
+  "enemies": [
+    {
+      "x": -90,
+      "y": 20,
+      "patrol": [
+        {
+          "x": -90,
+          "y": 20
+        },
+        {
+          "x": 90,
+          "y": 20
+        }
+      ]
+    },
+    {
+      "x": 90,
+      "y": 20
+    },
+    {
+      "x": -40,
+      "y": 140,
+      "patrol": [
+        {
+          "x": -40,
+          "y": 140
+        },
+        {
+          "x": 40,
+          "y": 140
+        }
+      ]
+    },
+    {
+      "x": 40,
+      "y": 140
+    },
+    {
+      "x": 0,
+      "y": 80
+    },
+    {
+      "x": 20,
+      "y": 180
+    }
+  ],
+  "name": "THE HILL",
+  "blurb": "GET ONE BODY HOME. THAT'S THE WAR.",
+  "objective": "extract_vip",
+  "biome": "snow",
+  "aggression": 9,
+  "tiles": [
+    "WWWWWWWWWWWWWWWWWWWWWWWW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIISSSSSSIIIIIIIIIW",
+    "WIIIIIIISSSSSSIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WWWWWWWWWWGGGGWWWWWWWWWW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WWWWWWWWWWWWWWWWWWWWWWWW"
+  ],
+  "vip": {
+    "x": 60,
+    "y": -180,
+    "name": "PACKAGE"
+  },
+  "extract": {
+    "x": 0,
+    "y": 210
+  }
+}

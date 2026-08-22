@@ -1,0 +1,48 @@
+{
+  "id": "the-yard",
+  "name": "THE YARD",
+  "blurb": "THE SHACK KEEPS SENDING BODIES. THE JEEP IS FASTER.",
+  "objective": "destroy_barracks",
+  "tileSize": 32,
+  "biome": "dirt",
+  "aggression": 6,
+  "grenadeLoadout": 0,
+  "rocketLoadout": 0,
+  "tiles": [
+    "WWWWWWWWWWWWWWWWWWWWWWWW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDWWWWWWDDWWWWWWDDDDDW",
+    "WDDDWDDDDDDDDDDDDWDDDDDW",
+    "WDDDWDDDDDDDDDDDDWDDDDDW",
+    "WDDDWDDDDDDDDDDDDWDDDDDW",
+    "WDDDWWWWWWDDWWWWWWDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WWWWWWDDDDDDDDDDWWWWWWWW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WWWWWWWWWWWWWWWWWWWWWWWW"
+  ],
+  "squad": [
+    { "x": -40, "y": -210 },
+    { "x": -12, "y": -210 },
+    { "x": 12, "y": -210 },
+    { "x": 40, "y": -210 }
+  ],
+  "enemies": [
+    { "x": -80, "y": 80, "patrol": [{ "x": -80, "y": 80 }, { "x": 80, "y": 80 }] },
+    { "x": 80, "y": 80, "patrol": [{ "x": 80, "y": 80 }, { "x": -80, "y": 80 }] },
+    { "x": 0, "y": 40 },
+    { "x": -50, "y": 160 },
+    { "x": 50, "y": 160 }
+  ],
+  "barracks": { "x": 0, "y": 200 },
+  "jeep": { "x": 90, "y": -160 },
+  "rockets": [{ "x": 90, "y": -120 }],
+  "grenades": [{ "x": -180, "y": -40 }]
+}

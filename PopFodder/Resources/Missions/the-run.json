@@ -1,0 +1,107 @@
+{
+  "id": "the-run",
+  "tileSize": 32,
+  "grenadeLoadout": 0,
+  "rocketLoadout": 0,
+  "squad": [
+    {
+      "x": -42,
+      "y": -200
+    },
+    {
+      "x": -14,
+      "y": -200
+    },
+    {
+      "x": 14,
+      "y": -200
+    },
+    {
+      "x": 42,
+      "y": -200
+    }
+  ],
+  "enemies": [
+    {
+      "x": -90,
+      "y": 170
+    },
+    {
+      "x": -40,
+      "y": 190
+    },
+    {
+      "x": 40,
+      "y": 190
+    },
+    {
+      "x": 90,
+      "y": 170
+    },
+    {
+      "x": -70,
+      "y": 50,
+      "patrol": [
+        {
+          "x": -70,
+          "y": 50
+        },
+        {
+          "x": 70,
+          "y": 50
+        }
+      ]
+    },
+    {
+      "x": 70,
+      "y": 50
+    },
+    {
+      "x": 0,
+      "y": 10
+    },
+    {
+      "x": -30,
+      "y": -40
+    }
+  ],
+  "name": "THE RUN",
+  "blurb": "SAME GAP. MEANER GUN.",
+  "objective": "destroy_turret",
+  "biome": "grass",
+  "aggression": 8,
+  "tiles": [
+    "WWWWWWWWWWWWWWWWWWWWWWWW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WWWWWWWWWWGGGGWWWWWWWWWW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WWWWWWWWWWGGGGWWWWWWWWWW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WWWWWWWWWWWWWWWWWWWWWWWW"
+  ],
+  "turret": {
+    "x": 0,
+    "y": 210
+  },
+  "grenades": [
+    {
+      "x": -200,
+      "y": 70
+    },
+    {
+      "x": 200,
+      "y": 70
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "id": "hill-2",
+  "tileSize": 32,
+  "grenadeLoadout": 0,
+  "rocketLoadout": 0,
+  "squad": [
+    {
+      "x": -42,
+      "y": -200
+    },
+    {
+      "x": -14,
+      "y": -200
+    },
+    {
+      "x": 14,
+      "y": -200
+    },
+    {
+      "x": 42,
+      "y": -200
+    }
+  ],
+  "enemies": [
+    {
+      "x": -80,
+      "y": 100,
+      "patrol": [
+        {
+          "x": -80,
+          "y": 100
+        },
+        {
+          "x": 80,
+          "y": 100
+        }
+      ]
+    },
+    {
+      "x": 80,
+      "y": 100
+    },
+    {
+      "x": 0,
+      "y": 50
+    },
+    {
+      "x": -50,
+      "y": 180
+    },
+    {
+      "x": 50,
+      "y": 180
+    }
+  ],
+  "name": "THE HILL",
+  "blurb": "THEN THE SHACK.",
+  "objective": "destroy_barracks",
+  "biome": "dirt",
+  "aggression": 8,
+  "tiles": [
+    "WWWWWWWWWWWWWWWWWWWWWWWW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WWWWWWWWWWGGGGWWWWWWWWWW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WWWWWWWWWWWWWWWWWWWWWWWW"
+  ],
+  "barracks": {
+    "x": 0,
+    "y": 210
+  },
+  "jeep": {
+    "x": 90,
+    "y": -150
+  },
+  "rockets": [
+    {
+      "x": 90,
+      "y": -110
+    }
+  ],
+  "grenades": [
+    {
+      "x": -170,
+      "y": -30
+    }
+  ]
+}

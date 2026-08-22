@@ -1,0 +1,41 @@
+name: PopFodder
+options:
+  bundleIdPrefix: be.gampa
+  deploymentTarget:
+    iOS: "17.0"
+  xcodeVersion: "16"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5.10"
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: "3"
+    DEVELOPMENT_TEAM: GZYFXW9AWA
+    PRODUCT_BUNDLE_IDENTIFIER: be.gampa.popfodder
+  configs:
+    Release:
+      CODE_SIGN_STYLE: Manual
+      CODE_SIGN_IDENTITY: Apple Distribution
+      PROVISIONING_PROFILE_SPECIFIER: PopFodder AppStore
+
+targets:
+  PopFodder:
+    type: application
+    platform: iOS
+    sources:
+      - path: PopFodder
+    resources:
+      - path: PopFodder/Resources
+      - path: PopFodder/Assets.xcassets
+    settings:
+      base:
+        INFOPLIST_FILE: PopFodder/App/Info.plist
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        PRODUCT_BUNDLE_IDENTIFIER: be.gampa.popfodder
+        CODE_SIGN_STYLE: Automatic
+      configs:
+        Release:
+          CODE_SIGN_STYLE: Manual
+          CODE_SIGN_IDENTITY: Apple Distribution
+          PROVISIONING_PROFILE_SPECIFIER: PopFodder AppStore

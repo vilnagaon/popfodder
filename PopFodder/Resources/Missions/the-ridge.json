@@ -1,0 +1,101 @@
+{
+  "id": "the-ridge",
+  "tileSize": 32,
+  "grenadeLoadout": 0,
+  "rocketLoadout": 0,
+  "squad": [
+    {
+      "x": -42,
+      "y": -200
+    },
+    {
+      "x": -14,
+      "y": -200
+    },
+    {
+      "x": 14,
+      "y": -200
+    },
+    {
+      "x": 42,
+      "y": -200
+    }
+  ],
+  "enemies": [
+    {
+      "x": -100,
+      "y": 170
+    },
+    {
+      "x": 100,
+      "y": 170
+    },
+    {
+      "x": -50,
+      "y": 40,
+      "patrol": [
+        {
+          "x": -50,
+          "y": 40
+        },
+        {
+          "x": 50,
+          "y": 40
+        }
+      ]
+    },
+    {
+      "x": 50,
+      "y": 40
+    },
+    {
+      "x": 0,
+      "y": 90
+    },
+    {
+      "x": -80,
+      "y": -20
+    }
+  ],
+  "name": "THE RIDGE",
+  "blurb": "TWO GAPS. ONE GUN.",
+  "objective": "destroy_turret",
+  "biome": "grass",
+  "aggression": 7,
+  "tiles": [
+    "WWWWWWWWWWWWWWWWWWWWWWWW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGWWWWWWGGWWWWWWGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGWWWWWWGGWWWWWWGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WWWWWWWWWWWWWWWWWWWWWWWW"
+  ],
+  "turret": {
+    "x": 0,
+    "y": 200
+  },
+  "grenades": [
+    {
+      "x": -200,
+      "y": 80
+    }
+  ],
+  "rockets": [
+    {
+      "x": 200,
+      "y": 80
+    }
+  ]
+}

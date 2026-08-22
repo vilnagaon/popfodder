@@ -1,0 +1,106 @@
+{
+  "id": "package-2",
+  "tileSize": 32,
+  "grenadeLoadout": 0,
+  "rocketLoadout": 0,
+  "squad": [
+    {
+      "x": -42,
+      "y": -200
+    },
+    {
+      "x": -14,
+      "y": -200
+    },
+    {
+      "x": 14,
+      "y": -200
+    },
+    {
+      "x": 42,
+      "y": -200
+    }
+  ],
+  "enemies": [
+    {
+      "x": -90,
+      "y": 20,
+      "patrol": [
+        {
+          "x": -90,
+          "y": 20
+        },
+        {
+          "x": 90,
+          "y": 20
+        }
+      ]
+    },
+    {
+      "x": 90,
+      "y": 140,
+      "patrol": [
+        {
+          "x": 90,
+          "y": 140
+        },
+        {
+          "x": -90,
+          "y": 140
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 80
+    },
+    {
+      "x": -50,
+      "y": 180
+    },
+    {
+      "x": 50,
+      "y": 180
+    }
+  ],
+  "name": "THE PACKAGE",
+  "blurb": "ONE MORE YARD OF SNOW.",
+  "objective": "extract_vip",
+  "biome": "snow",
+  "aggression": 8,
+  "tiles": [
+    "WWWWWWWWWWWWWWWWWWWWWWWW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WWWWWWWWWWGGGGWWWWWWWWWW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WWWWWWWWWWGGGGWWWWWWWWWW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WWWWWWWWWWWWWWWWWWWWWWWW"
+  ],
+  "vip": {
+    "x": 50,
+    "y": -180,
+    "name": "PACKAGE"
+  },
+  "extract": {
+    "x": 0,
+    "y": 210
+  },
+  "grenades": [
+    {
+      "x": -170,
+      "y": 0
+    }
+  ]
+}

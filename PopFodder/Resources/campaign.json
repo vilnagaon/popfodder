@@ -1,0 +1,16 @@
+{
+  "missions": [
+    { "title": "THE GAP", "maps": ["the-gap"] },
+    { "title": "THE YARD", "maps": ["the-yard"] },
+    { "title": "THE WALK", "maps": ["the-walk"] },
+    { "title": "THE PIT", "maps": ["the-pit"] },
+    { "title": "THE FARM", "maps": ["farm-1", "farm-2"] },
+    { "title": "THE RIDGE", "maps": ["the-ridge"] },
+    { "title": "THE COMPOUND", "maps": ["compound-1", "compound-2"] },
+    { "title": "THE ICEBOX", "maps": ["the-icebox"] },
+    { "title": "THE RUN", "maps": ["the-run"] },
+    { "title": "THE MOTOR", "maps": ["the-motor"] },
+    { "title": "THE PACKAGE", "maps": ["package-1", "package-2"] },
+    { "title": "THE HILL", "maps": ["hill-1", "hill-2", "hill-3"] }
+  ]
+}

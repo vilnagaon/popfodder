@@ -1,0 +1,93 @@
+{
+  "id": "compound-2",
+  "tileSize": 32,
+  "grenadeLoadout": 0,
+  "rocketLoadout": 0,
+  "squad": [
+    {
+      "x": -42,
+      "y": -200
+    },
+    {
+      "x": -14,
+      "y": -200
+    },
+    {
+      "x": 14,
+      "y": -200
+    },
+    {
+      "x": 42,
+      "y": -200
+    }
+  ],
+  "enemies": [
+    {
+      "x": -70,
+      "y": 150
+    },
+    {
+      "x": 70,
+      "y": 150
+    },
+    {
+      "x": 0,
+      "y": 80,
+      "patrol": [
+        {
+          "x": -90,
+          "y": 80
+        },
+        {
+          "x": 90,
+          "y": 80
+        }
+      ]
+    },
+    {
+      "x": 40,
+      "y": 20
+    }
+  ],
+  "name": "THE COMPOUND",
+  "blurb": "THE SHACK IS STILL OPEN.",
+  "objective": "destroy_barracks",
+  "biome": "dirt",
+  "aggression": 7,
+  "tiles": [
+    "WWWWWWWWWWWWWWWWWWWWWWWW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDWWWWGGGGWWWWDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WWWWWWWWWWWWWWWWWWWWWWWW"
+  ],
+  "barracks": {
+    "x": 0,
+    "y": 200
+  },
+  "grenades": [
+    {
+      "x": -160,
+      "y": 0
+    }
+  ],
+  "rockets": [
+    {
+      "x": 160,
+      "y": 0
+    }
+  ]
+}

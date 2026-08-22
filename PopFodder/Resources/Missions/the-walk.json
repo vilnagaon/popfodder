@@ -1,0 +1,45 @@
+{
+  "id": "the-walk",
+  "name": "THE WALK",
+  "blurb": "THE PACKAGE FOLLOWS. THE PITS DO NOT FORGIVE.",
+  "objective": "extract_vip",
+  "tileSize": 32,
+  "biome": "snow",
+  "aggression": 7,
+  "grenadeLoadout": 1,
+  "rocketLoadout": 0,
+  "tiles": [
+    "WWWWWWWWWWWWWWWWWWWWWWWW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIWWWWWWIIWWWWWWIIIIW",
+    "WIIIIWIIIIIIIIIIIIWIIIIW",
+    "WIIIIWIIISSSSIIIIIWIIIIW",
+    "WIIIIWIIIIIIIIIIIIWIIIIW",
+    "WIIIIWWWWWWIIWWWWWWIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WWWWWWIIIIIIIIIIWWWWWWWW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIISSSSIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WWWWWWWWWWWWWWWWWWWWWWWW"
+  ],
+  "squad": [
+    { "x": -40, "y": -210 },
+    { "x": -12, "y": -210 },
+    { "x": 12, "y": -210 },
+    { "x": 40, "y": -210 }
+  ],
+  "enemies": [
+    { "x": -90, "y": 20, "patrol": [{ "x": -90, "y": 20 }, { "x": 90, "y": 20 }] },
+    { "x": 90, "y": 20, "patrol": [{ "x": 90, "y": 20 }, { "x": -90, "y": 20 }] },
+    { "x": -40, "y": 150, "patrol": [{ "x": -40, "y": 150 }, { "x": 40, "y": 150 }] },
+    { "x": 40, "y": 150 }
+  ],
+  "vip": { "x": 70, "y": -180, "name": "PACKAGE" },
+  "extract": { "x": 0, "y": 200 }
+}

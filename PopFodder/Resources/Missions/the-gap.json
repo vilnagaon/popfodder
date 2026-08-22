@@ -1,0 +1,47 @@
+{
+  "id": "the-gap",
+  "name": "THE GAP",
+  "blurb": "RIFLES DO NOT. A GRENADE DOES.",
+  "objective": "destroy_turret",
+  "tileSize": 32,
+  "biome": "grass",
+  "aggression": 5,
+  "grenadeLoadout": 0,
+  "rocketLoadout": 0,
+  "tiles": [
+    "WWWWWWWWWWWWWWWWWWWWWWWW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDGGGGGGGGGGGGGGGGGGGGDW",
+    "WDGGGGGGGGGGGGGGGGGGGGDW",
+    "WDGGGGGGGGGGGGGGGGGGGGDW",
+    "WDGGWWWWWWGGWWWWWWGGGGDW",
+    "WDGGWGGGGGGGGGGGGWGGGGDW",
+    "WDGGWGGGGGGGGGGGGWGGGGDW",
+    "WDDDWGGGGDDDDGGGGWDDDDDW",
+    "WGGGWGGGGDDDDGGGGWGGGGGW",
+    "WGGGWGGGGGGGGGGGGWGGGGGW",
+    "WGGGWWWWWWGGWWWWWWGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WWWWWWWWWWWWWWWWWWWWWWWW"
+  ],
+  "squad": [
+    { "x": -42, "y": -200 },
+    { "x": -14, "y": -200 },
+    { "x": 14, "y": -200 },
+    { "x": 42, "y": -200 }
+  ],
+  "enemies": [
+    { "x": -90, "y": 168 },
+    { "x": -40, "y": 190 },
+    { "x": 40, "y": 190 },
+    { "x": 90, "y": 168 },
+    { "x": -70, "y": 40, "patrol": [{ "x": -70, "y": 40 }, { "x": 70, "y": 40 }] },
+    { "x": 70, "y": 40, "patrol": [{ "x": 70, "y": 40 }, { "x": -70, "y": 40 }] }
+  ],
+  "turret": { "x": 0, "y": 200 },
+  "grenades": [{ "x": -200, "y": 72 }]
+}

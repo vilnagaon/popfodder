@@ -1,0 +1,101 @@
+{
+  "id": "hill-1",
+  "tileSize": 32,
+  "grenadeLoadout": 0,
+  "rocketLoadout": 0,
+  "squad": [
+    {
+      "x": -42,
+      "y": -200
+    },
+    {
+      "x": -14,
+      "y": -200
+    },
+    {
+      "x": 14,
+      "y": -200
+    },
+    {
+      "x": 42,
+      "y": -200
+    }
+  ],
+  "enemies": [
+    {
+      "x": -90,
+      "y": 170
+    },
+    {
+      "x": 90,
+      "y": 170
+    },
+    {
+      "x": -40,
+      "y": 40,
+      "patrol": [
+        {
+          "x": -40,
+          "y": 40
+        },
+        {
+          "x": 40,
+          "y": 40
+        }
+      ]
+    },
+    {
+      "x": 40,
+      "y": 40
+    },
+    {
+      "x": 0,
+      "y": 90
+    },
+    {
+      "x": -60,
+      "y": -10
+    }
+  ],
+  "name": "THE HILL",
+  "blurb": "FIRST THE GUN.",
+  "objective": "destroy_turret",
+  "biome": "grass",
+  "aggression": 8,
+  "tiles": [
+    "WWWWWWWWWWWWWWWWWWWWWWWW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WWWWWWWWWWGGGGWWWWWWWWWW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WGGGGGGGGGGGGGGGGGGGGGGW",
+    "WWWWWWWWWWWWWWWWWWWWWWWW"
+  ],
+  "turret": {
+    "x": 0,
+    "y": 200
+  },
+  "grenades": [
+    {
+      "x": -200,
+      "y": 60
+    }
+  ],
+  "rockets": [
+    {
+      "x": 200,
+      "y": 60
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "id": "the-icebox",
+  "tileSize": 32,
+  "grenadeLoadout": 0,
+  "rocketLoadout": 0,
+  "squad": [
+    {
+      "x": -42,
+      "y": -200
+    },
+    {
+      "x": -14,
+      "y": -200
+    },
+    {
+      "x": 14,
+      "y": -200
+    },
+    {
+      "x": 42,
+      "y": -200
+    }
+  ],
+  "enemies": [
+    {
+      "x": -80,
+      "y": 160
+    },
+    {
+      "x": 80,
+      "y": 160
+    },
+    {
+      "x": 0,
+      "y": 40,
+      "patrol": [
+        {
+          "x": -100,
+          "y": 40
+        },
+        {
+          "x": 100,
+          "y": 40
+        }
+      ]
+    },
+    {
+      "x": -40,
+      "y": -20
+    },
+    {
+      "x": 40,
+      "y": -20
+    }
+  ],
+  "name": "THE ICEBOX",
+  "blurb": "ICE SLOWS. THE GUN DOES NOT.",
+  "objective": "destroy_turret",
+  "biome": "snow",
+  "aggression": 7,
+  "tiles": [
+    "WWWWWWWWWWWWWWWWWWWWWWWW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WWWWWWWWWWGGGGWWWWWWWWWW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIISSSSIIIISSSSIIIIIW",
+    "WIIIIISSSSIIIISSSSIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WWWWWWWWWWWWWWWWWWWWWWWW"
+  ],
+  "turret": {
+    "x": 0,
+    "y": 200
+  },
+  "grenades": [
+    {
+      "x": -190,
+      "y": 90
+    }
+  ]
+}

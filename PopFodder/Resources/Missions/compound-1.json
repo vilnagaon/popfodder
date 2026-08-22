@@ -1,0 +1,97 @@
+{
+  "id": "compound-1",
+  "tileSize": 32,
+  "grenadeLoadout": 0,
+  "rocketLoadout": 0,
+  "squad": [
+    {
+      "x": -42,
+      "y": -200
+    },
+    {
+      "x": -14,
+      "y": -200
+    },
+    {
+      "x": 14,
+      "y": -200
+    },
+    {
+      "x": 42,
+      "y": -200
+    }
+  ],
+  "enemies": [
+    {
+      "x": -80,
+      "y": 60,
+      "patrol": [
+        {
+          "x": -80,
+          "y": 60
+        },
+        {
+          "x": 80,
+          "y": 60
+        }
+      ]
+    },
+    {
+      "x": 80,
+      "y": 60
+    },
+    {
+      "x": 0,
+      "y": 140
+    },
+    {
+      "x": -40,
+      "y": 20
+    },
+    {
+      "x": 40,
+      "y": 20
+    }
+  ],
+  "name": "THE COMPOUND",
+  "blurb": "TAKE THE JEEP. DON'T DIE IN IT.",
+  "objective": "kill_all",
+  "biome": "dirt",
+  "aggression": 6,
+  "tiles": [
+    "WWWWWWWWWWWWWWWWWWWWWWWW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WWWWWWWWWWGGGGWWWWWWWWWW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WWWWWWWWWWWWWWWWWWWWWWWW"
+  ],
+  "jeep": {
+    "x": 100,
+    "y": -150
+  },
+  "rockets": [
+    {
+      "x": 100,
+      "y": -110
+    }
+  ],
+  "grenades": [
+    {
+      "x": -180,
+      "y": -60
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "id": "the-motor",
+  "tileSize": 32,
+  "grenadeLoadout": 0,
+  "rocketLoadout": 0,
+  "squad": [
+    {
+      "x": -42,
+      "y": -200
+    },
+    {
+      "x": -14,
+      "y": -200
+    },
+    {
+      "x": 14,
+      "y": -200
+    },
+    {
+      "x": 42,
+      "y": -200
+    }
+  ],
+  "enemies": [
+    {
+      "x": -90,
+      "y": 90,
+      "patrol": [
+        {
+          "x": -90,
+          "y": 90
+        },
+        {
+          "x": 90,
+          "y": 90
+        }
+      ]
+    },
+    {
+      "x": 90,
+      "y": 90
+    },
+    {
+      "x": 0,
+      "y": 40
+    },
+    {
+      "x": -50,
+      "y": 170
+    },
+    {
+      "x": 50,
+      "y": 170
+    },
+    {
+      "x": 20,
+      "y": -20
+    }
+  ],
+  "name": "THE MOTOR",
+  "blurb": "JEEP, ROCKET, SHACK. IN THAT ORDER.",
+  "objective": "destroy_barracks",
+  "biome": "dirt",
+  "aggression": 8,
+  "tiles": [
+    "WWWWWWWWWWWWWWWWWWWWWWWW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WWWWWWWWWWGGGGWWWWWWWWWW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WDDDDDDDDDDDDDDDDDDDDDDW",
+    "WWWWWWWWWWWWWWWWWWWWWWWW"
+  ],
+  "barracks": {
+    "x": 0,
+    "y": 210
+  },
+  "jeep": {
+    "x": 90,
+    "y": -160
+  },
+  "rockets": [
+    {
+      "x": 90,
+      "y": -120
+    }
+  ],
+  "grenades": [
+    {
+      "x": -180,
+      "y": -40
+    }
+  ]
+}

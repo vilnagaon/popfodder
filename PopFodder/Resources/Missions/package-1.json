@@ -1,0 +1,86 @@
+{
+  "id": "package-1",
+  "tileSize": 32,
+  "grenadeLoadout": 1,
+  "rocketLoadout": 0,
+  "squad": [
+    {
+      "x": -42,
+      "y": -200
+    },
+    {
+      "x": -14,
+      "y": -200
+    },
+    {
+      "x": 14,
+      "y": -200
+    },
+    {
+      "x": 42,
+      "y": -200
+    }
+  ],
+  "enemies": [
+    {
+      "x": -80,
+      "y": 30,
+      "patrol": [
+        {
+          "x": -80,
+          "y": 30
+        },
+        {
+          "x": 80,
+          "y": 30
+        }
+      ]
+    },
+    {
+      "x": 80,
+      "y": 30
+    },
+    {
+      "x": 0,
+      "y": 120
+    },
+    {
+      "x": -40,
+      "y": 160
+    }
+  ],
+  "name": "THE PACKAGE",
+  "blurb": "KEEP THEM OFF THE ICE HOLES.",
+  "objective": "extract_vip",
+  "biome": "snow",
+  "aggression": 7,
+  "tiles": [
+    "WWWWWWWWWWWWWWWWWWWWWWWW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WWWWWWWWWWGGGGWWWWWWWWWW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIISSSSSSIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WIIIIIIIIIIIIIIIIIIIIIIW",
+    "WWWWWWWWWWWWWWWWWWWWWWWW"
+  ],
+  "vip": {
+    "x": 70,
+    "y": -180,
+    "name": "PACKAGE"
+  },
+  "extract": {
+    "x": 0,
+    "y": 200
+  }
+}

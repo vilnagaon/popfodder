@@ -19,6 +19,10 @@ final class Battle {
     private(set) var extract: CGPoint?
     private(set) var outcome: Outcome = .playing
 
+    var enemyKills: Int {
+        soldiers.filter { $0.faction == .enemy && $0.kind == .infantry && !$0.alive }.count
+    }
+
     private var mergeSuppressedUntil: TimeInterval = 0
     private var jeepBailUntil: TimeInterval = 0
     private var nextEnemyRifle: TimeInterval = 0

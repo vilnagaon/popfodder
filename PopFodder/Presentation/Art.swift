@@ -23,7 +23,7 @@ enum Art {
             } else if !player {
                 pot = (220, 40, 36)
             } else if group == 0 {
-                pot = (56, 200, 82)
+                pot = (150, 138, 88)
             } else {
                 pot = (38, 158, 184)
             }
@@ -356,7 +356,7 @@ enum Art {
             if dead {
                 hull = (58, 58, 58)
             } else if occupied {
-                hull = (56, 200, 82)
+                hull = (150, 138, 88)
             } else {
                 hull = (88, 96, 62)
             }
@@ -367,7 +367,7 @@ enum Art {
             let wheel: RGB = (18, 18, 18)
             let glass: RGB = dead ? (48, 48, 50) : (40, 70, 90)
             let lamp: RGB = dead ? (70, 70, 68) : (255, 230, 140)
-            let helm: RGB = occupied && !dead ? (56, 200, 82) : (32, 34, 28)
+            let helm: RGB = occupied && !dead ? (150, 138, 88) : (32, 34, 28)
             let visor: RGB = occupied && !dead ? (28, 28, 26) : (22, 22, 20)
             return stamp(40) { set, _ in
                 func box(_ x0: Int, _ y0: Int, _ x1: Int, _ y1: Int, _ rgb: RGB) {

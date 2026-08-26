@@ -4,6 +4,13 @@ struct Trooper: Identifiable, Equatable {
     let id: UUID
     let name: String
     var rank: Int
+
+    var rankName: String { RankNames.abbrev[min(RankNames.abbrev.count - 1, max(0, rank))] }
+}
+
+/// Enlisted ladder, 0-7. No officers — everyone here is expendable.
+enum RankNames {
+    static let abbrev = ["PVT", "PFC", "CPL", "SGT", "SSG", "SFC", "MSG", "SGM"]
 }
 
 struct CampaignDef: Codable {
@@ -22,6 +29,7 @@ final class Campaign {
     private(set) var nextName = 0
     private(set) var heldSquad: [Trooper]?
     private(set) var casualtiesThisRun = 0
+    private(set) var kills = 0
     let def: CampaignDef
 
     init() {
@@ -61,7 +69,8 @@ final class Campaign {
         }
     }
 
-    func advancePhase(deployed: [Trooper], survivors: [Soldier]) {
+    func advancePhase(deployed: [Trooper], survivors: [Soldier], kills: Int) {
+        self.kills += kills
         apply(deployed: deployed, survivors: survivors)
         heldSquad = deployed.compactMap { t in
             pool.first { $0.id == t.id }
@@ -70,7 +79,8 @@ final class Campaign {
         PlayLog.line("phase_win mission=\(missionNumber) next_phase=\(phaseNumber) held=\(heldSquad?.count ?? 0) pool=\(pool.count)")
     }
 
-    func resolveMission(deployed: [Trooper], survivors: [Soldier], won: Bool) {
+    func resolveMission(deployed: [Trooper], survivors: [Soldier], won: Bool, kills: Int) {
+        self.kills += kills
         apply(deployed: deployed, survivors: survivors)
         heldSquad = nil
         if won {
@@ -82,6 +92,7 @@ final class Campaign {
         } else {
             PlayLog.line("mission_lose \(missionTitle) pool=\(pool.count) exhausted=\(poolExhausted)")
         }
+        GameCenter.submit(missionsSurvived: missionIndex, kills: self.kills)
     }
 
     private func apply(deployed: [Trooper], survivors: [Soldier]) {

@@ -10,7 +10,7 @@ settings:
   base:
     SWIFT_VERSION: "5.10"
     MARKETING_VERSION: "1.0.0"
-    CURRENT_PROJECT_VERSION: "4"
+    CURRENT_PROJECT_VERSION: "5"
     DEVELOPMENT_TEAM: GZYFXW9AWA
     PRODUCT_BUNDLE_IDENTIFIER: be.gampa.popfodder
   configs:
@@ -34,6 +34,7 @@ targets:
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         PRODUCT_BUNDLE_IDENTIFIER: be.gampa.popfodder
         CODE_SIGN_STYLE: Automatic
+        CODE_SIGN_ENTITLEMENTS: PopFodder/App/PopFodder.entitlements
       configs:
         Release:
           CODE_SIGN_STYLE: Manual

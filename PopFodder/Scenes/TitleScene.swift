@@ -6,6 +6,7 @@ final class TitleScene: SKScene {
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
         scaleMode = .resizeFill
         SFX.boot()
+        Music.playIntroLoop()
 
         let mark = SKShapeNode(circleOfRadius: 42)
         mark.fillColor = SKColor(red: 1, green: 0.84, blue: 0, alpha: 1)
@@ -33,6 +34,13 @@ final class TitleScene: SKScene {
         sub.position = CGPoint(x: 0, y: -68)
         addChild(sub)
 
+        let ranks = SKLabelNode(fontNamed: "Menlo")
+        ranks.text = "RANKS"
+        ranks.fontSize = 10
+        ranks.fontColor = SKColor(white: 0.4, alpha: 1)
+        ranks.position = CGPoint(x: 0, y: -100)
+        addChild(ranks)
+
         mark.setScale(0.4)
         mark.alpha = 0
         title.alpha = 0
@@ -42,7 +50,13 @@ final class TitleScene: SKScene {
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else { return }
         Juice.haptic(.medium)
+        if touch.location(in: self).y < -88, let root = view?.window?.rootViewController {
+            GameCenter.showLeaderboards(from: root)
+            return
+        }
+        Music.stop()
         view?.presentScene(
             RosterScene(size: size, campaign: Campaign()),
             transition: .fade(with: SKColor(white: 0.05, alpha: 1), duration: 0.35)

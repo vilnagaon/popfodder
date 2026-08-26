@@ -8,7 +8,16 @@ struct PopFodderApp: App {
             SpriteView(scene: Self.launchScene())
                 .ignoresSafeArea()
                 .statusBarHidden(true)
+                .onAppear { Self.authenticateGameCenter() }
         }
+    }
+
+    private static func authenticateGameCenter() {
+        guard let root = UIApplication.shared.connectedScenes
+            .compactMap({ ($0 as? UIWindowScene)?.windows.first(where: \.isKeyWindow) })
+            .first?.rootViewController
+        else { return }
+        GameCenter.authenticate { vc in root.present(vc, animated: true) }
     }
 
     private static func launchScene() -> SKScene {

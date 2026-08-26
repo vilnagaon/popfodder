@@ -28,7 +28,7 @@ final class RosterScene: SKScene {
         addLabel(mission.objectiveLine, font: "Menlo", size: 12, color: SKColor(red: 0.86, green: 0.16, blue: 0.14, alpha: 1), y: 48)
         addLabel(mission.blurb ?? "", font: "Menlo", size: 10, color: SKColor(white: 0.55, alpha: 1), y: 28)
 
-        let names = squad.map { "\($0.name)·\($0.rank)" }.joined(separator: "   ")
+        let names = squad.map { "\($0.rankName) \($0.name)" }.joined(separator: "   ")
         addLabel(names, font: "Menlo-Bold", size: 13, color: SKColor(red: 0.22, green: 0.78, blue: 0.32, alpha: 1), y: -16)
         addLabel("POOL \(campaign.pool.count)   GRAVES \(campaign.graves.count)", font: "Menlo", size: 10, color: SKColor(white: 0.45, alpha: 1), y: -42)
         addLabel("TAP TO DEPLOY", font: "Menlo", size: 12, color: SKColor(white: 0.7, alpha: 1), y: -88)

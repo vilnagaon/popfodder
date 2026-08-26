@@ -8,6 +8,7 @@ DerivedData/
 
 # Build
 build/
+*.mobileprovision
 
 # macOS
 .DS_Store

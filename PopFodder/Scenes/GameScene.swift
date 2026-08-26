@@ -167,7 +167,7 @@ final class GameScene: SKScene {
                 .run { [weak self] in
                     guard let self else { return }
                     if won, !self.campaign.isLastPhase {
-                        self.campaign.advancePhase(deployed: self.squad, survivors: troops)
+                        self.campaign.advancePhase(deployed: self.squad, survivors: troops, kills: self.battle.enemyKills)
                         let next = GameScene(
                             size: self.size,
                             campaign: self.campaign,
@@ -176,7 +176,7 @@ final class GameScene: SKScene {
                         )
                         self.view?.presentScene(next, transition: .fade(with: .black, duration: 0.35))
                     } else {
-                        self.campaign.resolveMission(deployed: self.squad, survivors: troops, won: won)
+                        self.campaign.resolveMission(deployed: self.squad, survivors: troops, won: won, kills: self.battle.enemyKills)
                         let grave = GraveyardScene(
                             size: self.size,
                             campaign: self.campaign,
@@ -854,7 +854,7 @@ final class GameScene: SKScene {
     private func abortMission() {
         finished = true
         isPaused = false
-        campaign.resolveMission(deployed: squad, survivors: battle.playerSoldiers, won: false)
+        campaign.resolveMission(deployed: squad, survivors: battle.playerSoldiers, won: false, kills: battle.enemyKills)
         view?.presentScene(
             RosterScene(size: size, campaign: campaign),
             transition: .fade(with: SKColor(white: 0.05, alpha: 1), duration: 0.3)

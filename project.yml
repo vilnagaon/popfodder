@@ -35,6 +35,7 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: be.gampa.popfodder
         CODE_SIGN_STYLE: Automatic
         CODE_SIGN_ENTITLEMENTS: PopFodder/App/PopFodder.entitlements
+        TARGETED_DEVICE_FAMILY: "1,2"
       configs:
         Release:
           CODE_SIGN_STYLE: Manual

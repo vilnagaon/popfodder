@@ -1,18 +1,29 @@
 import SwiftUI
 import SpriteKit
 
+/// SwiftUI's App lifecycle doesn't reliably enforce Info.plist's landscape-only
+/// lock on iPad without this hook — without it the app can be handed a portrait
+/// window.
+private final class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(
+        _ application: UIApplication,
+        supportedInterfaceOrientationsFor window: UIWindow?
+    ) -> UIInterfaceOrientationMask {
+        .landscape
+    }
+}
+
 @main
 struct PopFodderApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+
     var body: some Scene {
         WindowGroup {
-            SpriteView(scene: Self.launchScene())
-                .ignoresSafeArea()
-                .statusBarHidden(true)
-                .onAppear { Self.authenticateGameCenter() }
+            RootView()
         }
     }
 
-    private static func authenticateGameCenter() {
+    static func authenticateGameCenter() {
         guard let root = UIApplication.shared.connectedScenes
             .compactMap({ ($0 as? UIWindowScene)?.windows.first(where: \.isKeyWindow) })
             .first?.rootViewController
@@ -20,8 +31,10 @@ struct PopFodderApp: App {
         GameCenter.authenticate { vc in root.present(vc, animated: true) }
     }
 
-    private static func launchScene() -> SKScene {
-        let size = UIScreen.main.bounds.size
+    /// `UIScreen.main.bounds` doesn't reflect the real window size under iPadOS
+    /// multitasking (Stage Manager, Split View) — the scene must be sized from
+    /// the actual view geometry instead, captured once at launch.
+    static func launchScene(size: CGSize) -> SKScene {
         if ProcessInfo.processInfo.arguments.contains("-graveyard") {
             let campaign = Campaign()
             campaign.buryFromPool(8)
@@ -37,7 +50,58 @@ struct PopFodderApp: App {
         if ProcessInfo.processInfo.arguments.contains("-infantry") {
             return InfantrySheetScene(size: size)
         }
+        if ProcessInfo.processInfo.arguments.contains("-roster") {
+            return RosterScene(size: size, campaign: Campaign())
+        }
+        if ProcessInfo.processInfo.arguments.contains("-gap") {
+            let campaign = Campaign()
+            return GameScene(size: size, campaign: campaign, mission: campaign.currentMission, squad: campaign.deploy())
+        }
+        if ProcessInfo.processInfo.arguments.contains("-split") {
+            let campaign = Campaign()
+            let squad = campaign.deploy()
+            let scene = GameScene(size: size, campaign: campaign, mission: campaign.currentMission, squad: squad)
+            if let id = squad.first?.id {
+                scene.battle.splitSoldier(id)
+                if let mover = scene.battle.soldiers.first(where: { $0.id == id }) {
+                    scene.battle.orderMove(to: CGPoint(x: mover.position.x + 90, y: mover.position.y + 70))
+                }
+            }
+            return scene
+        }
+        if ProcessInfo.processInfo.arguments.contains("-jeep") {
+            let campaign = Campaign()
+            let mission = Mission.loadNamed("the-yard")
+            let scene = GameScene(size: size, campaign: campaign, mission: mission, squad: campaign.deploy())
+            if let jeep = scene.battle.jeep { scene.battle.orderMove(to: jeep.position) }
+            return scene
+        }
         return TitleScene(size: size)
+    }
+}
+
+/// Sizes the scene from real view geometry (not `UIScreen.main.bounds`, which is
+/// wrong under iPadOS Stage Manager/Split View) and constructs it exactly once.
+private struct RootView: View {
+    @State private var scene: SKScene?
+
+    var body: some View {
+        GeometryReader { proxy in
+            Group {
+                if let scene {
+                    SpriteView(scene: scene)
+                } else {
+                    Color.black.onAppear {
+                        scene = PopFodderApp.launchScene(size: proxy.size)
+                    }
+                }
+            }
+            .frame(width: proxy.size.width, height: proxy.size.height)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .ignoresSafeArea()
+        .statusBarHidden(true)
+        .onAppear { PopFodderApp.authenticateGameCenter() }
     }
 }
 

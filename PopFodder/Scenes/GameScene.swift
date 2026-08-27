@@ -5,7 +5,7 @@ final class GameScene: SKScene {
     private let campaign: Campaign
     private let mission: Mission
     private let squad: [Trooper]
-    private let battle: Battle
+    let battle: Battle
     private let world = SKNode()
     private let cameraNode = SKCameraNode()
     private let hud = SKNode()

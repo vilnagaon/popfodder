@@ -80,14 +80,7 @@ final class GraveyardScene: SKScene {
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let next: SKScene
-        if campaignOver {
-            next = RosterScene(size: size, campaign: Campaign())
-        } else if let pending = campaign.pendingPromotions.first {
-            next = PromotionScene(size: size, campaign: campaign, trooperId: pending)
-        } else {
-            next = RosterScene(size: size, campaign: campaign)
-        }
+        let next = campaignOver ? RosterScene(size: size, campaign: Campaign()) : RunFlow.next(size: size, campaign: campaign)
         view?.presentScene(next, transition: .fade(with: .black, duration: 0.3))
     }
 

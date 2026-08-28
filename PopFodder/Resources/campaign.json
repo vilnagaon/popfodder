@@ -1,16 +1,16 @@
 {
   "missions": [
-    { "title": "THE GAP", "maps": ["the-gap"] },
-    { "title": "THE YARD", "maps": ["the-yard"] },
-    { "title": "THE WALK", "maps": ["the-walk"] },
-    { "title": "THE PIT", "maps": ["the-pit"] },
-    { "title": "THE FARM", "maps": ["farm-1", "farm-2"] },
-    { "title": "THE RIDGE", "maps": ["the-ridge"] },
-    { "title": "THE COMPOUND", "maps": ["compound-1", "compound-2"] },
-    { "title": "THE ICEBOX", "maps": ["the-icebox"] },
-    { "title": "THE RUN", "maps": ["the-run"] },
-    { "title": "THE MOTOR", "maps": ["the-motor"] },
-    { "title": "THE PACKAGE", "maps": ["package-1", "package-2"] },
-    { "title": "THE HILL", "maps": ["hill-1", "hill-2", "hill-3"] }
+    { "id": "the-gap", "title": "THE GAP", "maps": ["the-gap"], "next": ["the-yard"] },
+    { "id": "the-yard", "title": "THE YARD", "maps": ["the-yard"], "next": ["the-walk"] },
+    { "id": "the-walk", "title": "THE WALK", "maps": ["the-walk"], "next": ["the-pit"] },
+    { "id": "the-pit", "title": "THE PIT", "maps": ["the-pit"], "next": ["the-farm"] },
+    { "id": "the-farm", "title": "THE FARM", "maps": ["farm-1", "farm-2"], "next": ["the-ridge", "the-compound"] },
+    { "id": "the-ridge", "title": "THE RIDGE", "maps": ["the-ridge"], "next": ["the-icebox"], "hint": "OPEN GROUND. NOWHERE TO HIDE, ONE PHASE." },
+    { "id": "the-compound", "title": "THE COMPOUND", "maps": ["compound-1", "compound-2"], "next": ["the-icebox"], "hint": "TWO PHASES. MORE GUNS, MORE GEAR." },
+    { "id": "the-icebox", "title": "THE ICEBOX", "maps": ["the-icebox"], "next": ["the-run"] },
+    { "id": "the-run", "title": "THE RUN", "maps": ["the-run"], "next": ["the-motor", "the-package"] },
+    { "id": "the-motor", "title": "THE MOTOR", "maps": ["the-motor"], "next": ["the-hill"], "hint": "ONE PUSH. IN AND OUT, ONE PHASE." },
+    { "id": "the-package", "title": "THE PACKAGE", "maps": ["package-1", "package-2"], "next": ["the-hill"], "hint": "TWO PHASES. THE VIP WALKS HOME." },
+    { "id": "the-hill", "title": "THE HILL", "maps": ["hill-1", "hill-2", "hill-3"], "next": [] }
   ]
 }

@@ -50,12 +50,6 @@ final class PromotionScene: SKScene {
         guard let touch = touches.first else { return }
         let x = touch.location(in: self).x
         campaign.choose(x < 0 ? .marksman : .medic, for: trooperId)
-        let next: SKScene
-        if let pending = campaign.pendingPromotions.first {
-            next = PromotionScene(size: size, campaign: campaign, trooperId: pending)
-        } else {
-            next = RosterScene(size: size, campaign: campaign)
-        }
-        view?.presentScene(next, transition: .fade(with: .black, duration: 0.2))
+        view?.presentScene(RunFlow.next(size: size, campaign: campaign), transition: .fade(with: .black, duration: 0.2))
     }
 }

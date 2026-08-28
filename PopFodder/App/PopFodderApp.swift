@@ -58,6 +58,21 @@ struct PopFodderApp: App {
             let id = campaign.pool[0].id
             return PromotionScene(size: size, campaign: campaign, trooperId: id)
         }
+        if ProcessInfo.processInfo.arguments.contains("-route") {
+            let campaign = Campaign()
+            campaign.chooseRoute("the-farm")
+            _ = campaign.currentMission
+            let survivors = campaign.deploy().map { trooper in
+                Soldier(
+                    id: trooper.id, name: trooper.name, rank: trooper.rank, alive: true,
+                    position: .zero, groupId: 0, faction: .player, kind: .infantry,
+                    goals: [], path: [], facing: 0, fireCooldown: 0, inVehicle: false,
+                    patrol: [], patrolIndex: 0
+                )
+            }
+            campaign.resolveMission(deployed: campaign.deploy(), survivors: survivors, won: true, kills: 0, grenadesLeft: 0, rocketsLeft: 0)
+            return RouteScene(size: size, campaign: campaign)
+        }
         if ProcessInfo.processInfo.arguments.contains("-gap") {
             let campaign = Campaign()
             return GameScene(size: size, campaign: campaign, mission: campaign.currentMission, squad: campaign.deploy())

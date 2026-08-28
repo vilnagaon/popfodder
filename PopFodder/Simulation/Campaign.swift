@@ -24,8 +24,14 @@ enum TrooperClass {
 
 struct CampaignDef: Codable {
     struct Item: Codable {
+        let id: String
         let title: String
         let maps: [String]
+        /// v1.4: 0 = campaign end, 1 = linear (auto-continue), 2+ = a real
+        /// choice (RouteScene). Keep branches converging, not exponential —
+        /// this is a light DAG over the same fixed mission set, not a map.
+        let next: [String]
+        let hint: String?
     }
     let missions: [Item]
 }
@@ -33,13 +39,18 @@ struct CampaignDef: Codable {
 final class Campaign {
     private(set) var pool: [Trooper]
     private(set) var graves: [Trooper] = []
-    private(set) var missionIndex = 0
+    private(set) var currentId: String
+    private(set) var completedCount = 0
     private(set) var phaseIndex = 0
     private(set) var nextName = 0
     private(set) var heldSquad: [Trooper]?
     private(set) var casualtiesThisRun = 0
     private(set) var kills = 0
+    private(set) var campaignFinished = false
     private(set) var pendingPromotions: [UUID] = []
+    /// v1.4: populated instead of auto-advancing when the just-completed
+    /// mission's `next` has 2+ options — RouteScene resolves it via chooseRoute.
+    private(set) var pendingRoute: [CampaignDef.Item] = []
     /// v1.3: ordnance carries between missions instead of resetting free.
     /// Capped so hoarding isn't strictly optimal — spend it or lose the overflow.
     private(set) var grenadeStock = 4
@@ -50,6 +61,7 @@ final class Campaign {
 
     init() {
         def = CampaignDef.load()
+        currentId = def.missions.first?.id ?? ""
         pool = []
         for _ in 0..<15 {
             pool.append(nextTrooper(rank: 0))
@@ -57,17 +69,21 @@ final class Campaign {
         PlayLog.line("campaign_start pool=\(pool.count) missions=\(def.missions.count)")
     }
 
-    var currentMission: Mission {
-        Mission.loadNamed(def.missions[missionIndex].maps[phaseIndex])
+    private var currentItem: CampaignDef.Item {
+        def.missions.first { $0.id == currentId } ?? def.missions[0]
     }
 
-    var missionTitle: String { def.missions[missionIndex].title }
+    var currentMission: Mission {
+        Mission.loadNamed(currentItem.maps[phaseIndex])
+    }
+
+    var missionTitle: String { currentItem.title }
     var missionCount: Int { def.missions.count }
-    var missionNumber: Int { missionIndex + 1 }
-    var phaseCount: Int { def.missions[missionIndex].maps.count }
+    var missionNumber: Int { completedCount + 1 }
+    var phaseCount: Int { currentItem.maps.count }
     var phaseNumber: Int { phaseIndex + 1 }
     var isLastPhase: Bool { phaseIndex >= phaseCount - 1 }
-    var finished: Bool { missionIndex >= def.missions.count }
+    var finished: Bool { campaignFinished }
     var poolExhausted: Bool { pool.count < 2 }
 
     func deploy() -> [Trooper] {
@@ -78,6 +94,12 @@ final class Campaign {
     func choose(_ trait: TrooperClass, for id: UUID) {
         if let i = pool.firstIndex(where: { $0.id == id }) { pool[i].trait = trait }
         pendingPromotions.removeAll { $0 == id }
+    }
+
+    func chooseRoute(_ id: String) {
+        currentId = id
+        phaseIndex = 0
+        pendingRoute = []
     }
 
     /// Screenshot / `-graveyard` launch. Moves `n` names from the pool onto the hill.
@@ -109,15 +131,23 @@ final class Campaign {
         apply(deployed: deployed, survivors: survivors)
         heldSquad = nil
         if won {
-            let incoming = (missionIndex + 1) / 3
+            let incoming = (completedCount + 1) / 3
             replenish(rank: incoming)
             PlayLog.line("mission_win \(missionTitle) graves=\(graves.count) pool=\(pool.count) casualties=\(casualtiesThisRun)")
-            missionIndex += 1
-            phaseIndex = 0
+            let options = currentItem.next
+            completedCount += 1
+            if options.count > 1 {
+                pendingRoute = options.compactMap { id in def.missions.first { $0.id == id } }
+            } else if let onlyId = options.first {
+                currentId = onlyId
+                phaseIndex = 0
+            } else {
+                campaignFinished = true
+            }
         } else {
             PlayLog.line("mission_lose \(missionTitle) pool=\(pool.count) exhausted=\(poolExhausted)")
         }
-        GameCenter.submit(missionsSurvived: missionIndex, kills: self.kills)
+        GameCenter.submit(missionsSurvived: completedCount, kills: self.kills)
     }
 
     private func apply(deployed: [Trooper], survivors: [Soldier]) {
@@ -159,7 +189,7 @@ extension CampaignDef {
         guard let url, let data = try? Data(contentsOf: url),
               let def = try? JSONDecoder().decode(CampaignDef.self, from: data) else {
             return CampaignDef(missions: [
-                .init(title: "THE GAP", maps: ["the-gap"])
+                .init(id: "the-gap", title: "THE GAP", maps: ["the-gap"], next: [], hint: nil)
             ])
         }
         return def

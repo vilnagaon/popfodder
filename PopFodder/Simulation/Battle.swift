@@ -29,14 +29,16 @@ final class Battle {
     private var rng: UInt64 = 0xC0FFEE
     private let aggression: CGFloat
 
-    init(mission: Mission, squad: [Trooper]) {
+    /// `grenades`/`rockets`: the squad's carried-over supply (Campaign.grenadeStock /
+    /// rocketStock), spent as this mission's starting loadout — not a free per-map refill.
+    init(mission: Mission, squad: [Trooper], grenades: Int = 0, rockets: Int = 0) {
         self.mission = mission
         pathfinder = Pathfinder(mission: mission)
         blockers = mission.wallRects
         aggression = CGFloat(mission.aggression ?? 5)
         rng = 0xC0FFEE ^ UInt64(truncatingIfNeeded: mission.id.hashValue)
-        groupGrenades[0] = mission.grenadeLoadout ?? 0
-        groupRockets[0] = mission.rocketLoadout ?? 0
+        groupGrenades[0] = grenades
+        groupRockets[0] = rockets
         pickups = (mission.grenades ?? []).map { Pickup(position: CGPoint(x: $0.x, y: $0.y), grenade: true, taken: false) }
             + (mission.rockets ?? []).map { Pickup(position: CGPoint(x: $0.x, y: $0.y), grenade: false, taken: false) }
         if let j = mission.jeep {

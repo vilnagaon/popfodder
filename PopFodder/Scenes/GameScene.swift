@@ -56,7 +56,7 @@ final class GameScene: SKScene {
         self.campaign = campaign
         self.mission = mission
         self.squad = squad
-        self.battle = Battle(mission: mission, squad: squad)
+        self.battle = Battle(mission: mission, squad: squad, grenades: campaign.grenadeStock, rockets: campaign.rocketStock)
         super.init(size: size)
         scaleMode = .resizeFill
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
@@ -167,7 +167,11 @@ final class GameScene: SKScene {
                 .run { [weak self] in
                     guard let self else { return }
                     if won, !self.campaign.isLastPhase {
-                        self.campaign.advancePhase(deployed: self.squad, survivors: troops, kills: self.battle.enemyKills)
+                        self.campaign.advancePhase(
+                            deployed: self.squad, survivors: troops, kills: self.battle.enemyKills,
+                            grenadesLeft: self.battle.groupGrenades.reduce(0, +),
+                            rocketsLeft: self.battle.groupRockets.reduce(0, +)
+                        )
                         let next = GameScene(
                             size: self.size,
                             campaign: self.campaign,
@@ -176,7 +180,11 @@ final class GameScene: SKScene {
                         )
                         self.view?.presentScene(next, transition: .fade(with: .black, duration: 0.35))
                     } else {
-                        self.campaign.resolveMission(deployed: self.squad, survivors: troops, won: won, kills: self.battle.enemyKills)
+                        self.campaign.resolveMission(
+                            deployed: self.squad, survivors: troops, won: won, kills: self.battle.enemyKills,
+                            grenadesLeft: self.battle.groupGrenades.reduce(0, +),
+                            rocketsLeft: self.battle.groupRockets.reduce(0, +)
+                        )
                         let grave = GraveyardScene(
                             size: self.size,
                             campaign: self.campaign,
@@ -854,7 +862,11 @@ final class GameScene: SKScene {
     private func abortMission() {
         finished = true
         isPaused = false
-        campaign.resolveMission(deployed: squad, survivors: battle.playerSoldiers, won: false, kills: battle.enemyKills)
+        campaign.resolveMission(
+            deployed: squad, survivors: battle.playerSoldiers, won: false, kills: battle.enemyKills,
+            grenadesLeft: battle.groupGrenades.reduce(0, +),
+            rocketsLeft: battle.groupRockets.reduce(0, +)
+        )
         view?.presentScene(
             RosterScene(size: size, campaign: campaign),
             transition: .fade(with: SKColor(white: 0.05, alpha: 1), duration: 0.3)

@@ -40,6 +40,12 @@ final class Campaign {
     private(set) var casualtiesThisRun = 0
     private(set) var kills = 0
     private(set) var pendingPromotions: [UUID] = []
+    /// v1.3: ordnance carries between missions instead of resetting free.
+    /// Capped so hoarding isn't strictly optimal — spend it or lose the overflow.
+    private(set) var grenadeStock = 4
+    private(set) var rocketStock = 2
+    static let maxGrenades = 6
+    static let maxRockets = 3
     let def: CampaignDef
 
     init() {
@@ -84,8 +90,10 @@ final class Campaign {
         }
     }
 
-    func advancePhase(deployed: [Trooper], survivors: [Soldier], kills: Int) {
+    func advancePhase(deployed: [Trooper], survivors: [Soldier], kills: Int, grenadesLeft: Int, rocketsLeft: Int) {
         self.kills += kills
+        grenadeStock = min(Self.maxGrenades, grenadesLeft)
+        rocketStock = min(Self.maxRockets, rocketsLeft)
         apply(deployed: deployed, survivors: survivors)
         heldSquad = deployed.compactMap { t in
             pool.first { $0.id == t.id }
@@ -94,8 +102,10 @@ final class Campaign {
         PlayLog.line("phase_win mission=\(missionNumber) next_phase=\(phaseNumber) held=\(heldSquad?.count ?? 0) pool=\(pool.count)")
     }
 
-    func resolveMission(deployed: [Trooper], survivors: [Soldier], won: Bool, kills: Int) {
+    func resolveMission(deployed: [Trooper], survivors: [Soldier], won: Bool, kills: Int, grenadesLeft: Int, rocketsLeft: Int) {
         self.kills += kills
+        grenadeStock = min(Self.maxGrenades, grenadesLeft)
+        rocketStock = min(Self.maxRockets, rocketsLeft)
         apply(deployed: deployed, survivors: survivors)
         heldSquad = nil
         if won {

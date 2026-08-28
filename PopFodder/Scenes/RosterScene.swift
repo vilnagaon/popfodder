@@ -68,7 +68,7 @@ final class RosterScene: SKScene {
             }
             statusLabel.fontSize = 10
             statusLabel.fontColor = SKColor(white: 0.45, alpha: 1)
-            statusLabel.position = CGPoint(x: 0, y: -66)
+            statusLabel.position = CGPoint(x: 0, y: -50)
             statusLabel.horizontalAlignmentMode = .center
             addChild(statusLabel)
         } else {
@@ -76,6 +76,11 @@ final class RosterScene: SKScene {
             addLabel(names, font: "Menlo-Bold", size: 13, color: SKColor(red: 0.22, green: 0.78, blue: 0.32, alpha: 1), y: -16)
             addLabel("POOL \(campaign.pool.count)   GRAVES \(campaign.graves.count)", font: "Menlo", size: 10, color: SKColor(white: 0.45, alpha: 1), y: -42)
         }
+
+        addLabel(
+            "GRENADES \(campaign.grenadeStock)/\(Campaign.maxGrenades)   ROCKETS \(campaign.rocketStock)/\(Campaign.maxRockets)",
+            font: "Menlo", size: 10, color: SKColor(red: 1, green: 0.84, blue: 0, alpha: 0.85), y: -66
+        )
 
         deployLabel.fontSize = 12
         deployLabel.position = CGPoint(x: 0, y: -88)

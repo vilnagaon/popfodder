@@ -247,7 +247,7 @@ final class Battle {
         blasts.append((toss.to, toss.radius))
         for i in soldiers.indices where soldiers[i].alive && !soldiers[i].inVehicle {
             if hypot(soldiers[i].position.x - toss.to.x, soldiers[i].position.y - toss.to.y) <= toss.radius {
-                soldiers[i].kill()
+                if !medicSaves(i) { soldiers[i].kill() }
             }
         }
         if var jeep, jeep.alive,
@@ -488,11 +488,28 @@ final class Battle {
             soldiers[i].fireCooldown = soldiers[i].kind == .turret ? BattleConfig.turretCooldown : BattleConfig.rifleCooldown
             shotLines.append((from, to, soldiers[i].faction))
             if soldiers[targetIndex].rifleImmune { continue }
-            if soldiers[i].kind == .infantry, rand() < BattleConfig.missChance(rank: soldiers[i].rank) {
-                continue
+            if soldiers[i].kind == .infantry {
+                var miss = BattleConfig.missChance(rank: soldiers[i].rank)
+                if soldiers[i].faction == .player && soldiers[i].trait == .marksman {
+                    miss *= BattleConfig.marksmanMissMultiplier
+                }
+                if rand() < miss { continue }
             }
-            soldiers[targetIndex].kill()
+            if !medicSaves(targetIndex) {
+                soldiers[targetIndex].kill()
+            }
         }
+    }
+
+    /// v1.2: a nearby medic sometimes patches a wound that would have killed.
+    private func medicSaves(_ index: Int) -> Bool {
+        let target = soldiers[index]
+        guard target.faction == .player, target.kind == .infantry else { return false }
+        let hasMedic = soldiers.contains {
+            $0.id != target.id && $0.alive && $0.faction == .player && $0.trait == .medic
+                && hypot($0.position.x - target.position.x, $0.position.y - target.position.y) <= BattleConfig.medicSaveRadius
+        }
+        return hasMedic && rand() < BattleConfig.medicSaveChance
     }
 
     private func rand() -> CGFloat {
@@ -608,6 +625,7 @@ final class Battle {
                 id: trooper.id,
                 name: trooper.name,
                 rank: trooper.rank,
+                trait: trooper.trait,
                 alive: true,
                 position: CGPoint(x: spawn.x, y: spawn.y),
                 groupId: 0,

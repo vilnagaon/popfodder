@@ -53,6 +53,11 @@ struct PopFodderApp: App {
         if ProcessInfo.processInfo.arguments.contains("-roster") {
             return RosterScene(size: size, campaign: Campaign())
         }
+        if ProcessInfo.processInfo.arguments.contains("-promo") {
+            let campaign = Campaign()
+            let id = campaign.pool[0].id
+            return PromotionScene(size: size, campaign: campaign, trooperId: id)
+        }
         if ProcessInfo.processInfo.arguments.contains("-gap") {
             let campaign = Campaign()
             return GameScene(size: size, campaign: campaign, mission: campaign.currentMission, squad: campaign.deploy())

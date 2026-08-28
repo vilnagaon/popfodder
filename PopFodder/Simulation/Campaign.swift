@@ -4,6 +4,7 @@ struct Trooper: Identifiable, Equatable {
     let id: UUID
     let name: String
     var rank: Int
+    var trait: TrooperClass = .none
 
     var rankName: String { RankNames.abbrev[min(RankNames.abbrev.count - 1, max(0, rank))] }
 }
@@ -11,6 +12,14 @@ struct Trooper: Identifiable, Equatable {
 /// Enlisted ladder, 0-7. No officers — everyone here is expendable.
 enum RankNames {
     static let abbrev = ["PVT", "PFC", "CPL", "SGT", "SSG", "SFC", "MSG", "SGM"]
+}
+
+/// v1.2: picked once, at a trooper's first promotion. Further rank-ups just
+/// add power within the chosen class — no re-picking every tier.
+enum TrooperClass {
+    case none
+    case marksman
+    case medic
 }
 
 struct CampaignDef: Codable {
@@ -30,6 +39,7 @@ final class Campaign {
     private(set) var heldSquad: [Trooper]?
     private(set) var casualtiesThisRun = 0
     private(set) var kills = 0
+    private(set) var pendingPromotions: [UUID] = []
     let def: CampaignDef
 
     init() {
@@ -57,6 +67,11 @@ final class Campaign {
     func deploy() -> [Trooper] {
         if let held = heldSquad, !held.isEmpty { return held }
         return Array(pool.prefix(min(4, pool.count)))
+    }
+
+    func choose(_ trait: TrooperClass, for id: UUID) {
+        if let i = pool.firstIndex(where: { $0.id == id }) { pool[i].trait = trait }
+        pendingPromotions.removeAll { $0 == id }
     }
 
     /// Screenshot / `-graveyard` launch. Moves `n` names from the pool onto the hill.
@@ -100,7 +115,11 @@ final class Campaign {
         for trooper in deployed {
             if liveIDs.contains(trooper.id) {
                 if let i = pool.firstIndex(where: { $0.id == trooper.id }) {
+                    let firstPromotion = pool[i].rank == 0 && pool[i].trait == .none
                     pool[i].rank = min(7, pool[i].rank + 1)
+                    if firstPromotion && pool[i].rank == 1 {
+                        pendingPromotions.append(trooper.id)
+                    }
                 }
             } else if let i = pool.firstIndex(where: { $0.id == trooper.id }) {
                 graves.append(pool.remove(at: i))

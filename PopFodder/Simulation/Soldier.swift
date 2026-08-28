@@ -29,6 +29,7 @@ struct Soldier: Identifiable, Equatable {
     let id: UUID
     let name: String
     var rank: Int
+    var trait: TrooperClass = .none
     var alive: Bool
     var position: CGPoint
     var groupId: Int
@@ -115,6 +116,10 @@ enum BattleConfig {
     static func missChance(rank: Int) -> CGFloat {
         max(0.06, 0.32 - CGFloat(rank) * 0.035)
     }
+    /// v1.2 traits, picked once at first promotion.
+    static let marksmanMissMultiplier: CGFloat = 0.5
+    static let medicSaveChance: CGFloat = 0.35
+    static let medicSaveRadius: CGFloat = 90
 }
 
 enum RecruitNames {

@@ -44,6 +44,43 @@ enum Juice {
         }
     }
 
+    /// A bright pop at the blast center — the "boom," distinct from the
+    /// translucent kill-radius disc GameScene already draws for gameplay clarity.
+    static func flashCore(at point: CGPoint, radius: CGFloat, in parent: SKNode) {
+        let core = SKShapeNode(circleOfRadius: radius * 0.05)
+        core.position = point
+        core.fillColor = SKColor(white: 1, alpha: 0.95)
+        core.strokeColor = .clear
+        core.zPosition = 9
+        parent.addChild(core)
+        core.run(.sequence([
+            .group([
+                .scale(to: radius * 0.4 / (radius * 0.05), duration: 0.09),
+                .fadeOut(withDuration: 0.14)
+            ]),
+            .removeFromParent()
+        ]))
+    }
+
+    /// A ring that outruns the kill-radius disc and fades — the shockwave.
+    static func shockwave(at point: CGPoint, radius: CGFloat, color: SKColor, in parent: SKNode) {
+        let ring = SKShapeNode(circleOfRadius: radius * 0.2)
+        ring.position = point
+        ring.fillColor = .clear
+        ring.strokeColor = color
+        ring.lineWidth = 3
+        ring.alpha = 0.9
+        ring.zPosition = 9
+        parent.addChild(ring)
+        ring.run(.sequence([
+            .group([
+                .scale(to: radius * 1.5 / (radius * 0.2), duration: 0.26),
+                .fadeOut(withDuration: 0.26)
+            ]),
+            .removeFromParent()
+        ]))
+    }
+
     static func flash(_ node: SKNode) {
         node.run(.sequence([
             .fadeAlpha(to: 0.35, duration: 0.04),

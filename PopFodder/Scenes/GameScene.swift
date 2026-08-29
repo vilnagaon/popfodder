@@ -766,7 +766,10 @@ final class GameScene: SKScene {
                 .fadeOut(withDuration: 0.22),
                 .removeFromParent()
             ]))
+            Juice.flashCore(at: point, radius: radius, in: world)
+            Juice.shockwave(at: point, radius: radius, color: stroke, in: world)
             Juice.puff(at: point, color: stroke, in: world)
+            if grenade { Juice.puff(at: point, color: SKColor(white: 0.35, alpha: 1), in: world) }
         }
     }
 

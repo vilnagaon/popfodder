@@ -132,7 +132,8 @@ enum Art {
         }
     }
 
-    /// 3/4 man: pot helmet, torso, stride, optional rifle / Brass pack / collar.
+    /// Chibi rig: big head with a face, pot helmet over the top, small body, stubby legs.
+    /// Back view = helmet only. Dead = flat head, X eyes.
     private static func paintMan(
         pot: RGB,
         outline: RGB,
@@ -151,81 +152,102 @@ enum Art {
         let lite = shade(pot, 1.16)
         let stock: RGB = (92, 62, 34)
         let barrel: RGB = (52, 52, 50)
+        let eye: RGB = (16, 16, 14)
+        let cheek: RGB = (236, 128, 118)
         if dead {
-            oval(16, 21, 11, 4.2, shade(outline, 0.8), set)
-            oval(10, 17, 6.2, 5.2, outline, set)
-            oval(10, 17, 5.1, 4.1, pot, set)
-            oval(12.2, 17.4, 2.2, 1.6, visor, set)
-            oval(19, 18, 6.5, 3.6, outline, set)
-            oval(19, 18, 5.4, 2.6, pot, set)
-            rect(24, 16, 30, 20, dark, set)
-            rect(28, 16, 31, 20, boot, set)
-            rect(16, 17, 18, 19, skin, set)
+            oval(16, 27, 9, 2.6, shade(outline, 0.8), set)
+            oval(16, 21, 7.6, 5.0, outline, set)
+            oval(16, 21, 6.6, 4.2, skin, set)
+            oval(16, 18.6, 7.0, 2.4, pot, set)
+            stroke(12.2, 20.6, 14.4, 22.8, 0.55, eye, set)
+            stroke(14.4, 20.6, 12.2, 22.8, 0.55, eye, set)
+            stroke(17.6, 20.6, 19.8, 22.8, 0.55, eye, set)
+            stroke(19.8, 20.6, 17.6, 22.8, 0.55, eye, set)
+            oval(16, 26, 4.2, 2.2, dark, set)
+            rect(12, 27, 13, 29, boot, set)
+            rect(18, 27, 19, 29, boot, set)
             return
         }
         let ang = Double(dir) * .pi / 4
         let fx = cos(ang)
         let fy = -sin(ang)
         let bob: Double = step == 1 ? -0.8 : (step == 2 ? 0.6 : 0)
-        let stride: Double = step == 1 ? 2.8 : (step == 2 ? -2.8 : 0)
-        let hx = 16.0
-        let hy = 8.4 + bob
-        let tx = 16.0 + fx * 0.8
-        let ty = 16.4 + bob * 0.4
+        let stride: Double = step == 1 ? 2.4 : (step == 2 ? -2.4 : 0)
+        let hx = 16.0 + fx * 0.6
+        let hy = 11.2 + bob
+        let tx = 16.0 + fx * 0.4
+        let ty = 21.4 + bob * 0.4
         let px = -fy
         let py = fx
         let front = fy > 0.28
         let back = fy < -0.28
+        let side = abs(fx) > 0.5
 
         func leg(_ sx: Double, _ sy: Double) {
-            oval(sx, sy, 2.4, 2.6, outline, set)
-            oval(sx, sy, 1.6, 1.9, pot, set)
-            oval(sx, sy + 4.2, 2.2, 2.4, outline, set)
-            oval(sx, sy + 4.2, 1.5, 1.7, dark, set)
-            oval(sx + fx * 0.3, sy + 6.2, 2.2, 1.5, boot, set)
+            oval(sx, sy, 2.3, 2.6, outline, set)
+            oval(sx, sy, 1.6, 1.9, dark, set)
+            oval(sx + fx * 0.4, sy + 2.3, 2.2, 1.4, boot, set)
         }
-        let l1x = tx - px * 3.6 - fx * stride * 0.35
-        let l1y = 22.6 + bob + fy * stride * 0.4
-        let l2x = tx + px * 3.6 + fx * stride * 0.35
-        let l2y = 22.6 + bob - fy * stride * 0.4
+        let l1x = tx - px * 2.6 - fx * stride * 0.3
+        let l1y = 26.0 + bob + fy * stride * 0.4
+        let l2x = tx + px * 2.6 + fx * stride * 0.3
+        let l2y = 26.0 + bob - fy * stride * 0.4
         if l1y < l2y { leg(l1x, l1y); leg(l2x, l2y) } else { leg(l2x, l2y); leg(l1x, l1y) }
 
         if back, let pack {
-            oval(tx - fx * 3.4, ty + 2.4, 3.0, 2.6, outline, set)
-            oval(tx - fx * 3.4, ty + 2.4, 2.3, 2.0, pack, set)
+            oval(tx - fx * 3.4, ty + 0.8, 2.8, 2.5, outline, set)
+            oval(tx - fx * 3.4, ty + 0.8, 2.0, 1.8, pack, set)
         }
 
-        oval(tx, ty, 4.6, 5.4, outline, set)
-        oval(tx, ty, 3.6, 4.4, pot, set)
-        oval(tx - 1.1, ty - 1.2, 1.6, 1.3, lite, set)
+        // Stubby arms, then the body.
+        oval(tx + px * 4.4, ty + 1.0, 1.6, 1.7, outline, set)
+        oval(tx + px * 4.4, ty + 1.0, 1.0, 1.1, pot, set)
+        oval(tx - px * 4.4, ty + 1.0, 1.6, 1.7, outline, set)
+        oval(tx - px * 4.4, ty + 1.0, 1.0, 1.1, pot, set)
+        oval(tx, ty, 5.0, 4.2, outline, set)
+        oval(tx, ty, 4.0, 3.3, pot, set)
+        oval(tx - 1.0, ty - 1.2, 1.4, 1.0, lite, set)
         if let collar {
             oval(tx + fx * 2.0, ty + fy * 2.2, 2.2, 1.7, collar, set)
         }
-        oval(tx + fx * 0.3, ty - 3.6, 1.6, 1.3, skin, set)
 
-        oval(hx, hy, 6.2, 5.4, outline, set)
-        oval(hx, hy, 5.2, 4.4, pot, set)
-        oval(hx - 1.6, hy - 1.4, 1.9, 1.5, lite, set)
-        if front {
-            oval(hx + fx * 1.2, hy + 2.4, 3.6, 1.7, visor, set)
-        } else if abs(fx) > 0.5 {
-            oval(hx + fx * 3.2, hy + 0.6, 1.8, 2.2, visor, set)
+        // Head: skin under a helmet. The face is the readable part.
+        oval(hx, hy, 8.0, 7.4, outline, set)
+        oval(hx, hy, 7.0, 6.4, skin, set)
+        if back {
+            oval(hx, hy, 6.8, 6.1, pot, set)
+            oval(hx - 1.8, hy - 2.2, 1.6, 1.2, lite, set)
+        } else {
+            // Helmet sits high so the face stays clear below its rim.
+            oval(hx, hy - 2.4, 7.4, 4.2, outline, set)
+            oval(hx, hy - 2.4, 6.6, 3.4, pot, set)
+            oval(hx - 2.0, hy - 3.8, 1.6, 0.9, lite, set)
+            if front {
+                oval(hx - 4.2, hy + 3.4, 1.2, 0.8, cheek, set)
+                oval(hx + 4.2, hy + 3.4, 1.2, 0.8, cheek, set)
+                oval(hx - 2.7, hy + 2.8, 1.1, 1.4, eye, set)
+                oval(hx + 2.7, hy + 2.8, 1.1, 1.4, eye, set)
+                oval(hx, hy + 4.8, 1.1, 0.6, eye, set)
+            } else if side {
+                oval(hx + fx * 2.8, hy + 2.8, 1.1, 1.4, eye, set)
+                oval(hx + fx * 4.4, hy + 3.6, 1.0, 0.7, cheek, set)
+            }
         }
 
         if !back, let pack {
-            oval(tx - fx * 3.2, ty + 2.2, 2.6, 2.2, outline, set)
-            oval(tx - fx * 3.2, ty + 2.2, 1.9, 1.6, pack, set)
+            oval(tx - fx * 3.2, ty + 0.8, 2.4, 2.2, outline, set)
+            oval(tx - fx * 3.2, ty + 0.8, 1.8, 1.6, pack, set)
         }
 
         if rifle {
-            let gx = tx + px * 5.0 + fx * 1.2
-            let gy = ty + py * 5.0 + fy * 0.8 + 1.4
-            let mx = gx + fx * 6.0
-            let my = gy + fy * 6.0
-            let bx = gx + fx * 12.2
-            let by = gy + fy * 12.2
-            let sx = gx - fx * 2.6
-            let sy = gy - fy * 2.6
+            let gx = tx + px * 4.8 + fx * 1.0
+            let gy = ty + py * 4.8 + fy * 0.8 + 1.2
+            let mx = gx + fx * 5.6
+            let my = gy + fy * 5.6
+            let bx = gx + fx * 11.4
+            let by = gy + fy * 11.4
+            let sx = gx - fx * 2.4
+            let sy = gy - fy * 2.4
             stroke(sx, sy, gx, gy, 1.55, stock, set)
             stroke(gx, gy, mx, my, 1.3, barrel, set)
             stroke(mx, my, bx, by, 1.1, barrel, set)
@@ -235,23 +257,29 @@ enum Art {
     }
 
     static func turret() -> SKTexture {
-        memo("turret32") {
+        memo("turret32c") {
             return stamp(32) { set, _ in
-                let hull: RGB = (176, 36, 36)
+                let hull: RGB = (196, 52, 48)
+                let light: RGB = (236, 98, 86)
                 let dark: RGB = (40, 40, 40)
-                let lip: RGB = (110, 24, 24)
-                for y in 10...28 {
-                    for x in 6...25 { set(x, y, y < 12 || x < 8 || x > 23 ? dark : hull) }
-                }
-                for y in 12...26 {
-                    for x in 8...23 { set(x, y, hull) }
-                }
-                for y in 2...14 {
-                    for x in 13...18 { set(x, y, dark) }
-                }
-                for y in 4...12 {
-                    for x in 14...17 { set(x, y, lip) }
-                }
+                let barrelC: RGB = (64, 64, 62)
+                let white: RGB = (250, 248, 240)
+                // Stubby barrel pointing north.
+                rect(14, 2, 17, 12, barrelC, set)
+                rect(13, 1, 18, 2, dark, set)
+                // Round body, chunky outline.
+                oval(16, 18, 11.5, 10.5, dark, set)
+                oval(16, 18, 10.2, 9.2, hull, set)
+                oval(12.5, 13.5, 4.5, 2.6, light, set)
+                // Angry eyes under slanted brows.
+                oval(12.3, 18.5, 2.6, 2.9, white, set)
+                oval(19.7, 18.5, 2.6, 2.9, white, set)
+                oval(12.9, 19.2, 1.3, 1.5, dark, set)
+                oval(19.1, 19.2, 1.3, 1.5, dark, set)
+                stroke(9.2, 14.4, 14.4, 16.4, 0.7, dark, set)
+                stroke(22.8, 14.4, 17.6, 16.4, 0.7, dark, set)
+                stroke(13.0, 24.4, 16.0, 23.6, 0.6, dark, set)
+                stroke(16.0, 23.6, 19.0, 24.4, 0.6, dark, set)
             }
         }
     }
@@ -378,10 +406,10 @@ enum Art {
                     }
                 }
                 // Wheels — four corners, long axis = east.
-                box(6, 8, 12, 11, wheel)
-                box(6, 28, 12, 31, wheel)
-                box(26, 8, 32, 11, wheel)
-                box(26, 28, 32, 31, wheel)
+                oval(9, 9.5, 3.6, 2.6, wheel, set)
+                oval(9, 29.5, 3.6, 2.6, wheel, set)
+                oval(29, 9.5, 3.6, 2.6, wheel, set)
+                oval(29, 29.5, 3.6, 2.6, wheel, set)
                 // Hull.
                 box(4, 12, 36, 27, outline)
                 box(5, 13, 35, 26, hull)
@@ -390,8 +418,10 @@ enum Art {
                 // Hood (east / right).
                 box(26, 14, 35, 25, mid)
                 box(28, 16, 34, 23, hull)
-                box(33, 17, 35, 18, lamp)
-                box(33, 21, 35, 22, lamp)
+                oval(34, 17.5, 1.6, 1.6, lamp, set)
+                oval(34, 22.5, 1.6, 1.6, lamp, set)
+                oval(34.4, 17.8, 0.6, 0.6, outline, set)
+                oval(34.4, 22.8, 0.6, 0.6, outline, set)
                 // Cabin well.
                 box(8, 15, 24, 24, outline)
                 box(9, 16, 23, 23, dark)
@@ -459,6 +489,11 @@ enum Art {
                     box(15, 22, 24, 36, door)
                     box(16, 24, 23, 35, pit)
                     box(15, 36, 24, 36, (40, 24, 18))
+                    // Window eyes either side of the door mouth.
+                    box(9, 23, 12, 26, (250, 246, 232))
+                    box(27, 23, 30, 26, (250, 246, 232))
+                    box(10, 24, 11, 25, outline)
+                    box(28, 24, 29, 25, outline)
                 } else {
                     // Rubble where the mouth was — no hole.
                     box(14, 24, 25, 36, groove)

@@ -1,5 +1,7 @@
 # PopFodder — Pixel design (gameplay)
 
+> **Decision 2026-11-07 (Stephan): in-play chibi.** Units and emplacements (infantry, VIP, turret, barracks, jeep) are chibi: big head with a face, pot helmet above it, small body. This supersedes the "helmets, not faces" and "no faces in play" rules below. Still held: 32 pt infantry, faction colour, the Brass disc, Menlo, and the same silhouette rules. Tiles, pickups and tombstones were not restyled.
+
 **Hiro · 2026-08-21.** How stamps *play*. Palette and mark: [`BRAND.md`](BRAND.md). What to draw: [`ART.md`](ART.md).
 If a prettier pixel does not change a decision, it is juice. Juice ships after the tell.
 

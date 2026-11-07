@@ -1,5 +1,7 @@
 # PopFodder — Art inventory
 
+> **Decision 2026-11-07 (Stephan): in-play chibi.** Units and emplacements (infantry, VIP, turret, barracks, jeep) are chibi: big head with a face, pot helmet above it, small body. This supersedes the "helmets, not faces" and "no faces in play" rules below. Still held: 32 pt infantry, faction colour, the Brass disc, Menlo, and the same silhouette rules. Tiles, pickups and tombstones were not restyled.
+
 Pixel owns this. **No Cannon Fodder / OpenFodder pixels in the tree.**
 Identity (colour, type, mark, voice): [`docs/BRAND.md`](BRAND.md) — Mara, 2026-08-20. Do not add a palette or a font that is not in that file.
 Gameplay tells (what each stamp must communicate): [`docs/PIXELS.md`](PIXELS.md) — Hiro, 2026-08-21. Pretty pixels that fail that file do not ship.

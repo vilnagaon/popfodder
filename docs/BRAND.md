@@ -1,5 +1,7 @@
 # PopFodder — Brand & Game Identity
 
+> **Decision 2026-11-07 (Stephan): in-play chibi.** Units and emplacements (infantry, VIP, turret, barracks, jeep) are chibi: big head with a face, pot helmet above it, small body. This supersedes the "helmets, not faces" and "no faces in play" rules below. Still held: 32 pt infantry, faction colour, the Brass disc, Menlo, and the same silhouette rules. Tiles, pickups and tombstones were not restyled.
+
 **v1.0 · 2026-08-20 · Mara**
 Pixel owns pixels (`docs/ART.md`). This file owns *what those pixels mean*.
 Hiro owns systems (`docs/ROADMAP.md`). This file owns how those systems *look and speak*.

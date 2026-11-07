@@ -6,8 +6,6 @@
   "tileSize": 32,
   "biome": "snow",
   "aggression": 7,
-  "grenadeLoadout": 1,
-  "rocketLoadout": 0,
   "tiles": [
     "WWWWWWWWWWWWWWWWWWWWWWWW",
     "WIIIIIIIIIIIIIIIIIIIIIIW",

@@ -6,8 +6,6 @@
   "tileSize": 32,
   "biome": "grass",
   "aggression": 5,
-  "grenadeLoadout": 0,
-  "rocketLoadout": 0,
   "tiles": [
     "WWWWWWWWWWWWWWWWWWWWWWWW",
     "WDDDDDDDDDDDDDDDDDDDDDDW",

@@ -56,7 +56,7 @@ final class GameScene: SKScene {
         self.campaign = campaign
         self.mission = mission
         self.squad = squad
-        self.battle = Battle(mission: mission, squad: squad, grenades: campaign.grenadeStock, rockets: campaign.rocketStock)
+        self.battle = Battle(mission: mission, squad: squad, grenades: campaign.grenadeStock, rockets: campaign.rocketStock, enemyRank: campaign.enemyRank)
         super.init(size: size)
         scaleMode = .resizeFill
         anchorPoint = CGPoint(x: 0.5, y: 0.5)

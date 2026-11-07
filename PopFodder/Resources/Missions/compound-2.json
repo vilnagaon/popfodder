@@ -1,8 +1,6 @@
 {
   "id": "compound-2",
   "tileSize": 32,
-  "grenadeLoadout": 0,
-  "rocketLoadout": 0,
   "squad": [
     {
       "x": -42,

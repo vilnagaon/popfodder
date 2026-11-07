@@ -42,8 +42,6 @@ def dump(file_id, **kwargs):
     data = {
         "id": file_id,
         "tileSize": TS,
-        "grenadeLoadout": 0,
-        "rocketLoadout": 0,
         "squad": squad(),
         "enemies": [],
     }
@@ -300,7 +298,6 @@ def map_package1():
         ],
         vip={"x": 70, "y": -180, "name": "PACKAGE"},
         extract={"x": 0, "y": 200},
-        grenadeLoadout=1,
     )
 
 
@@ -402,7 +399,6 @@ def map_hill3():
         ],
         vip={"x": 60, "y": -180, "name": "PACKAGE"},
         extract={"x": 0, "y": 210},
-        grenadeLoadout=1,
     )
 
 

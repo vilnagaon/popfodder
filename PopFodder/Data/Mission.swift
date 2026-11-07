@@ -10,8 +10,6 @@ struct Mission: Codable {
     let tiles: [String]
     let biome: String?
     let aggression: Int?
-    let grenadeLoadout: Int?
-    let rocketLoadout: Int?
     let squad: [Spawn]
     let enemies: [EnemySpawn]
     let turret: Spawn?

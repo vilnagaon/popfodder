@@ -70,6 +70,7 @@ struct Jeep {
     var occupants: [UUID]
     var path: [CGPoint]
     var fireCooldown: TimeInterval
+    var hp = BattleConfig.jeepHP
 
     var occupied: Bool { !occupants.isEmpty }
 }
@@ -94,6 +95,8 @@ enum BattleConfig {
     static let soldierRadius: CGFloat = 10
     static let turretRadius: CGFloat = 16
     static let jeepRadius: CGFloat = 18
+    /// Enemy rifle/turret hits a manned jeep survives.
+    static let jeepHP = 8
     static let maxGroups = 2
     static let maxWaypoints = 4
     static let rifleRange: CGFloat = 165
@@ -101,16 +104,16 @@ enum BattleConfig {
     static let turretRange: CGFloat = 200
     static let turretCooldown: TimeInterval = 0.72
     static let grenadeRadius: CGFloat = 64
-    static let grenadeRange: CGFloat = 320
+    static let grenadeRange: CGFloat = 170
     static let rocketRadius: CGFloat = 40
-    static let rocketRange: CGFloat = 240
+    static let rocketRange: CGFloat = 150
     static let pickupRadius: CGFloat = 24
     static let mergeRadius: CGFloat = 32
     static let mergeSuppress: TimeInterval = 1.2
     static let doubleTap: TimeInterval = 0.30
     static let panSlop: CGFloat = 24
     static let barracksPeriod: TimeInterval = 5.6
-    static let extractRadius: CGFloat = 40
+    static let extractRadius: CGFloat = 56
     static let vipFollow: CGFloat = 22
     static let enemyRifleGap: TimeInterval = 0.2
     static func missChance(rank: Int) -> CGFloat {

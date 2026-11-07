@@ -28,15 +28,19 @@ final class Battle {
     private var nextEnemyRifle: TimeInterval = 0
     private var rng: UInt64 = 0xC0FFEE
     private let aggression: CGFloat
+    /// Hostile infantry rank: drives their miss chance so later jobs don't stay at recruit aim.
+    private let enemyRank: Int
 
     /// `grenades`/`rockets`: the squad's carried-over supply (Campaign.grenadeStock /
     /// rocketStock), spent as this mission's starting loadout — not a free per-map refill.
-    init(mission: Mission, squad: [Trooper], grenades: Int = 0, rockets: Int = 0) {
+    init(mission: Mission, squad: [Trooper], grenades: Int = 0, rockets: Int = 0, enemyRank: Int = 0) {
         self.mission = mission
+        self.enemyRank = enemyRank
         pathfinder = Pathfinder(mission: mission)
         blockers = mission.wallRects
         aggression = CGFloat(mission.aggression ?? 5)
-        rng = 0xC0FFEE ^ UInt64(truncatingIfNeeded: mission.id.hashValue)
+        // FNV-1a: String.hashValue is re-seeded every launch, which made runs unreproducible.
+        rng = 0xC0FFEE ^ mission.id.utf8.reduce(14_695_981_039_346_656_037 as UInt64) { ($0 ^ UInt64($1)) &* 1_099_511_628_211 }
         groupGrenades[0] = grenades
         groupRockets[0] = rockets
         pickups = (mission.grenades ?? []).map { Pickup(position: CGPoint(x: $0.x, y: $0.y), grenade: true, taken: false) }
@@ -50,7 +54,7 @@ final class Battle {
         extract = mission.extract.map { CGPoint(x: $0.x, y: $0.y) }
 
         soldiers = Self.makeSquad(mission, squad)
-        soldiers += Self.makeEnemies(mission)
+        soldiers += Self.makeEnemies(mission, rank: enemyRank)
         if let turret = mission.turret {
             soldiers.append(Self.makeTurret(turret))
         }
@@ -317,13 +321,21 @@ final class Battle {
             } else {
                 next = CGPoint(x: pos.x + dx / dist * step, y: pos.y + dy / dist * step)
             }
-            if hitsBlocker(next, radius: soldiers[i].radius) {
-                soldiers[i].path.removeAll()
-                soldiers[i].goals.removeAll()
-                continue
+            var step2 = next
+            if hitsBlocker(step2, radius: soldiers[i].radius) {
+                // slide along the wall instead of freezing on an inflated corner
+                let slideX = CGPoint(x: next.x, y: pos.y)
+                let slideY = CGPoint(x: pos.x, y: next.y)
+                if !hitsBlocker(slideX, radius: soldiers[i].radius) { step2 = slideX }
+                else if !hitsBlocker(slideY, radius: soldiers[i].radius) { step2 = slideY }
+                else {
+                    soldiers[i].path.removeAll()
+                    soldiers[i].goals.removeAll()
+                    continue
+                }
             }
             soldiers[i].facing = atan2(dy, dx)
-            soldiers[i].position = next
+            soldiers[i].position = step2
         }
     }
 
@@ -381,7 +393,10 @@ final class Battle {
                 < hypot($1.position.x - soldiers[i].position.x, $1.position.y - soldiers[i].position.y)
         }) else { return }
         let d = hypot(target.position.x - soldiers[i].position.x, target.position.y - soldiers[i].position.y)
-        if d > BattleConfig.vipFollow + 8 {
+        // squad is home: walk the package the last stretch instead of idling at the rim
+        if let extract, hypot(target.position.x - extract.x, target.position.y - extract.y) <= BattleConfig.extractRadius {
+            soldiers[i].goals = [extract]
+        } else if d > BattleConfig.vipFollow + 8 {
             soldiers[i].goals = [target.position]
         } else {
             soldiers[i].goals.removeAll()
@@ -452,7 +467,7 @@ final class Battle {
                     Soldier(
                         id: UUID(),
                         name: "SPAWN",
-                        rank: 0,
+                        rank: enemyRank,
                         alive: true,
                         position: offset,
                         groupId: 0,
@@ -478,9 +493,12 @@ final class Battle {
         for i in soldiers.indices {
             guard soldiers[i].alive, !soldiers[i].inVehicle, soldiers[i].kind != .vip else { continue }
             soldiers[i].fireCooldown = max(0, soldiers[i].fireCooldown - dt)
-            guard let targetIndex = nearestTarget(from: i) else { continue }
+            let targetIndex = nearestTarget(from: i)
             let from = soldiers[i].position
-            let to = soldiers[targetIndex].position
+            let jeepDist = jeepThreat(to: i)
+            let shootsJeep = jeepDist != nil
+                && (targetIndex == nil || jeepDist! < hypot(soldiers[targetIndex!].position.x - from.x, soldiers[targetIndex!].position.y - from.y))
+            guard let to = shootsJeep ? jeep?.position : targetIndex.map({ soldiers[$0].position }) else { continue }
             soldiers[i].facing = atan2(to.y - from.y, to.x - from.x)
             guard soldiers[i].fireCooldown <= 0 else { continue }
             if soldiers[i].faction == .enemy && soldiers[i].kind == .infantry {
@@ -489,6 +507,16 @@ final class Battle {
             }
             soldiers[i].fireCooldown = soldiers[i].kind == .turret ? BattleConfig.turretCooldown : BattleConfig.rifleCooldown
             shotLines.append((from, to, soldiers[i].faction))
+            if shootsJeep {
+                if soldiers[i].kind == .infantry, rand() < BattleConfig.missChance(rank: soldiers[i].rank) { continue }
+                if var j = jeep {
+                    j.hp -= 1
+                    if j.hp <= 0 { killJeep(&j) }
+                    jeep = j
+                }
+                continue
+            }
+            guard let targetIndex else { continue }
             if soldiers[targetIndex].rifleImmune { continue }
             if soldiers[i].kind == .infantry {
                 var miss = BattleConfig.missChance(rank: soldiers[i].rank)
@@ -501,6 +529,15 @@ final class Battle {
                 soldiers[targetIndex].kill()
             }
         }
+    }
+
+    /// Distance to the manned jeep if this enemy can shoot it (range + LOS).
+    private func jeepThreat(to shooter: Int) -> CGFloat? {
+        guard let jeep, jeep.alive, jeep.occupied, soldiers[shooter].faction == .enemy else { return nil }
+        let s = soldiers[shooter]
+        let d = hypot(jeep.position.x - s.position.x, jeep.position.y - s.position.y)
+        let range = s.kind == .turret ? BattleConfig.turretRange : BattleConfig.rifleRange
+        return d <= range && hasLOS(s.position, jeep.position) ? d : nil
     }
 
     /// v1.2: a nearby medic sometimes patches a wound that would have killed.
@@ -644,13 +681,13 @@ final class Battle {
         }
     }
 
-    private static func makeEnemies(_ mission: Mission) -> [Soldier] {
+    private static func makeEnemies(_ mission: Mission, rank: Int) -> [Soldier] {
         mission.enemies.enumerated().map { i, spawn in
             let patrol = (spawn.patrol ?? []).map { CGPoint(x: $0.x, y: $0.y) }
             return Soldier(
                 id: UUID(),
                 name: "HOST-\(i + 1)",
-                rank: 0,
+                rank: rank,
                 alive: true,
                 position: CGPoint(x: spawn.x, y: spawn.y),
                 groupId: 0,

@@ -57,6 +57,8 @@ final class Campaign {
     private(set) var rocketStock = 2
     static let maxGrenades = 6
     static let maxRockets = 3
+    /// Recruits added per won mission. Small on purpose: a bad job should dent the pool.
+    static let refillPerWin = 6
     let def: CampaignDef
 
     init() {
@@ -80,6 +82,8 @@ final class Campaign {
     var missionTitle: String { currentItem.title }
     var missionCount: Int { def.missions.count }
     var missionNumber: Int { completedCount + 1 }
+    /// Hostile aim improves every other job: mission 1 = recruit, mission 12 = rank 5.
+    var enemyRank: Int { min(5, (missionNumber - 1) / 2) }
     var phaseCount: Int { currentItem.maps.count }
     var phaseNumber: Int { phaseIndex + 1 }
     var isLastPhase: Bool { phaseIndex >= phaseCount - 1 }
@@ -116,7 +120,7 @@ final class Campaign {
         self.kills += kills
         grenadeStock = min(Self.maxGrenades, grenadesLeft)
         rocketStock = min(Self.maxRockets, rocketsLeft)
-        apply(deployed: deployed, survivors: survivors)
+        apply(deployed: deployed, survivors: survivors, promote: true)
         heldSquad = deployed.compactMap { t in
             pool.first { $0.id == t.id }
         }
@@ -128,7 +132,7 @@ final class Campaign {
         self.kills += kills
         grenadeStock = min(Self.maxGrenades, grenadesLeft)
         rocketStock = min(Self.maxRockets, rocketsLeft)
-        apply(deployed: deployed, survivors: survivors)
+        apply(deployed: deployed, survivors: survivors, promote: won)
         heldSquad = nil
         if won {
             let incoming = (completedCount + 1) / 3
@@ -150,11 +154,12 @@ final class Campaign {
         GameCenter.submit(missionsSurvived: completedCount, kills: self.kills)
     }
 
-    private func apply(deployed: [Trooper], survivors: [Soldier]) {
+    /// Rank is earned by winning a phase — a lost or aborted one still buries its dead but promotes nobody.
+    private func apply(deployed: [Trooper], survivors: [Soldier], promote: Bool) {
         let liveIDs = Set(survivors.filter { $0.alive && $0.faction == .player && $0.kind == .infantry }.map(\.id))
         for trooper in deployed {
             if liveIDs.contains(trooper.id) {
-                if let i = pool.firstIndex(where: { $0.id == trooper.id }) {
+                if promote, let i = pool.firstIndex(where: { $0.id == trooper.id }) {
                     let firstPromotion = pool[i].rank == 0 && pool[i].trait == .none
                     pool[i].rank = min(7, pool[i].rank + 1)
                     if firstPromotion && pool[i].rank == 1 {
@@ -170,7 +175,7 @@ final class Campaign {
     }
 
     private func replenish(rank: Int) {
-        for _ in 0..<15 {
+        for _ in 0..<Self.refillPerWin {
             pool.append(nextTrooper(rank: rank))
         }
     }

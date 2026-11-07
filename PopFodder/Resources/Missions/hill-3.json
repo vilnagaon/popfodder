@@ -1,8 +1,6 @@
 {
   "id": "hill-3",
   "tileSize": 32,
-  "grenadeLoadout": 1,
-  "rocketLoadout": 0,
   "squad": [
     {
       "x": -42,

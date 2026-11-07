@@ -136,7 +136,7 @@ If a feature does not create one of those, it does not ship.
 3. Survivors of a *phase* gain one rank (OpenFodder: `mPhaseCount` then `Promote()`, cap 15). We cap at 8 display ranks.
 4. Rank's mechanical bonus is **accuracy** (tighter spread). Narrative is the rest.
 5. New recruits do not stay green forever. Incoming rank ≈ `floor((missionIndex - 1) / 3)` so the campaign's later fodder can shoot, and a *surviving* veteran is still special.
-6. After a won mission the pool gains **+15** names (OpenFodder: `mRecruits_Available_Count += 0x0F`). You do not buy soldiers. Cap = name-list length, fail if living pool < 2.
+6. After a won mission the pool gains **+6** names (OpenFodder uses +15; we refill less so losses show — `Campaign.refillPerWin`). You do not buy soldiers. Cap = name-list length, fail if living pool < 2.
 7. The soldier you like is the one you should not send first. The system must make that hurt.
 
 **Parameters**
@@ -144,7 +144,7 @@ If a feature does not create one of those, it does not ship.
 | Param | Default |
 |-------|---------|
 | Starting pool | 15 |
-| Replenish per won mission | +15 |
+| Replenish per won mission | +6 |
 | Name list | 200+ original names (Sage). Engine names 360; we do not copy them. |
 | Ranks | 8 steps, Recruit → General |
 | Incoming recruit rank | `floor((mission - 1) / 3)` |
@@ -235,7 +235,7 @@ POOL (source) → DEPLOY → COMBAT (converter: rank, or death) → GRAVEYARD (s
 
 | Flow | What |
 |------|------|
-| Source | Starting 15 + 15 per won mission. Name list is the hard cap. |
+| Source | Starting 15 + 6 per won mission. Name list is the hard cap. |
 | Converter | Survive a phase → +1 rank (accuracy). New bodies enter at campaign-scaled rank. |
 | Sink | Death. Also: fail the campaign if pool < 2 |
 | Informal exchange | A veteran "costs" more than a recruit because replacing *their* accuracy takes phases you may not have |

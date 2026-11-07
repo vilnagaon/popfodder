@@ -96,7 +96,7 @@ enum BattleConfig {
     static let turretRadius: CGFloat = 16
     static let jeepRadius: CGFloat = 18
     /// Enemy rifle/turret hits a manned jeep survives.
-    static let jeepHP = 8
+    static let jeepHP = 6
     static let maxGroups = 2
     static let maxWaypoints = 4
     static let rifleRange: CGFloat = 165
